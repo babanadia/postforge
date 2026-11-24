@@ -3,18 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PostForge — AI Telegram Channel Post Editor in Your Exact Voice</title>
-  <meta name="description" content="Forward 3–5 posts once to clone your Telegram channel's Style DNA. Turn voice memos, articles, X posts, and YouTube videos into publish-ready Telegram HTML posts in 15 seconds." />
+  <title>PostForge — AI Telegram Channel Post Editor &amp; Voice Cloner</title>
+  <meta name="description" content="Clone your Telegram channel's writing style by @username in 1 click, get a Free AI Channel Audit, and turn voice memos, articles, X posts, or YouTube links into ready posts in 10 seconds." />
+  <link rel="canonical" href="https://babanadia.github.io/postforge/" />
   <link rel="icon" type="image/jpeg" href="logo.jpg" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://babanadia.github.io/postforge/" />
-  <meta property="og:title" content="PostForge — AI Telegram Post Editor in Your Exact Voice" />
-  <meta property="og:description" content="Clone your channel's writing style from 3–5 posts. Drop voice memos, articles, X threads, or YouTube links — get clean Telegram posts in 15 seconds. 5 posts free." />
+  <meta property="og:title" content="PostForge — AI Telegram Post Editor &amp; Channel Voice Cloner" />
+  <meta property="og:description" content="Clone your channel's voice by @username, run a Free AI Channel Audit, and turn voice notes or links into ready posts in 10s. 3 free posts + instant live demo." />
   <meta property="og:image" content="https://babanadia.github.io/postforge/logo.jpg" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="PostForge — AI Telegram Post Editor in Your Exact Voice" />
-  <meta name="twitter:description" content="Clone your Telegram channel style from 3–5 posts. Turn voice memos, X posts, articles & YouTube into publish-ready posts in 15s." />
+  <meta name="twitter:title" content="PostForge — AI Telegram Post Editor &amp; Channel Voice Cloner" />
+  <meta name="twitter:description" content="Clone your Telegram channel style by @username. Free AI hook audit + voice notes, articles, X &amp; YouTube to publish-ready HTML in 10s." />
   <meta name="twitter:image" content="https://babanadia.github.io/postforge/logo.jpg" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "PostForge",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Telegram, iOS, Android, Web, Windows, macOS",
+    "url": "https://babanadia.github.io/postforge/",
+    "sameAs": "https://t.me/getpostforge_bot",
+    "description": "AI Telegram post editor that clones any channel's Style DNA from @username or 3-5 posts, audits channel hooks for free, and turns voice notes, articles, X posts, and YouTube videos into publish-ready Telegram HTML.",
+    "offers": {
+      "@type": "AggregateOffer",
+      "priceCurrency": "USD",
+      "lowPrice": "0",
+      "highPrice": "15",
+      "offerCount": "4"
+    }
+  }
+  </script>
   <style>
     :root {
       --bg: #0b0e14;
@@ -35,7 +55,7 @@
       line-height: 1.55;
       min-height: 100vh;
     }
-    .container { max-width: 1040px; margin: 0 auto; padding: 24px 20px 64px; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 24px 20px 64px; }
     header {
       display: flex; align-items: center; justify-content: space-between;
       padding: 12px 0 36px;
@@ -62,11 +82,11 @@
     }
     h1 {
       font-size: clamp(30px, 5vw, 50px); line-height: 1.12; font-weight: 800;
-      letter-spacing: -0.03em; max-width: 820px; margin: 0 auto 18px;
+      letter-spacing: -0.03em; max-width: 840px; margin: 0 auto 18px;
     }
     .subtitle {
       color: var(--muted); font-size: clamp(16px, 2.1vw, 19px);
-      max-width: 660px; margin: 0 auto 30px;
+      max-width: 680px; margin: 0 auto 30px;
     }
     .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     .cta-primary {
@@ -77,6 +97,14 @@
       transition: transform .15s ease, opacity .15s ease;
     }
     .cta-primary:hover { transform: translateY(-1px); opacity: 0.94; }
+    .cta-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--card); border: 1px solid var(--card-border);
+      color: var(--text); font-weight: 700; text-decoration: none;
+      padding: 14px 22px; border-radius: 12px; font-size: 16px;
+      transition: border-color .15s ease, transform .15s ease;
+    }
+    .cta-secondary:hover { border-color: var(--accent); transform: translateY(-1px); }
     .cta-note { margin-top: 12px; color: var(--muted); font-size: 13px; }
 
     .demo-section {
@@ -123,8 +151,9 @@
     .card h3 { font-size: 18px; margin-bottom: 8px; }
     .card p { color: var(--muted); font-size: 14px; }
 
-    .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    @media (max-width: 760px) { .pricing-grid { grid-template-columns: 1fr; } }
+    .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    @media (max-width: 920px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 560px) { .pricing-grid { grid-template-columns: 1fr; } }
     .price-card { position: relative; display: flex; flex-direction: column; justify-content: space-between; }
     .price-card.featured { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(56,189,248,0.25); }
     .price-amount { font-size: 32px; font-weight: 800; margin: 10px 0 4px; }
@@ -153,22 +182,26 @@
     </header>
 
     <section class="hero">
-      <div class="badge" data-i18n="badge">No channel admin rights needed · Pay with Stars / USDT / TON</div>
+      <div class="badge" data-i18n="badge">No admin rights needed · Card / Apple Pay / Google Pay (Stars) + USDT/TON</div>
       <h1 data-i18n="headline">Turn voice notes &amp; links into posts in your channel's exact voice</h1>
       <p class="subtitle" data-i18n="subtitle">
-        No more generic 'In today's fast-paced world' AI fluff. Forward 3–5 of your posts once — PostForge learns your rhythm and turns voice memos, articles, X posts, or YouTube videos into publish-ready posts in 15 seconds.
+        No more generic AI fluff. Drop @yourchannel once for a Free AI Channel Audit &amp; 1-click Style DNA cloning — then turn voice memos, articles, X posts, or YouTube videos into publish-ready Telegram posts in 10 seconds.
       </p>
       <div class="cta-row">
         <a class="cta-primary" href="https://t.me/getpostforge_bot?start=landing" target="_blank" rel="noopener" data-i18n="cta">
-          Try 5 Posts Free →
+          Try 3 Free Posts + Demo →
+        </a>
+        <a class="cta-secondary" href="https://t.me/getpostforge_bot?start=landing_audit" target="_blank" rel="noopener" data-i18n="ctaAudit">
+          📊 Run Free Channel Audit →
         </a>
       </div>
-      <div class="cta-note" data-i18n="ctaNote">20-second setup · No credit card required</div>
+      <div class="cta-note" data-i18n="ctaNote">10-second setup · 0-credit live demo · No card required</div>
     </section>
 
     <section class="demo-section">
       <div class="demo-tabs">
         <button class="demo-tab active" data-demo="voice" data-i18n="tabVoice">🎙 Voice → Post</button>
+        <button class="demo-tab" data-demo="audit" data-i18n="tabAudit">📊 Free Channel Audit</button>
         <button class="demo-tab" data-demo="url" data-i18n="tabUrl">🔗 Article / X / YouTube → Brief</button>
         <button class="demo-tab" data-demo="notes" data-i18n="tabNotes">📝 Rough Notes → Sharp Post</button>
       </div>
@@ -188,18 +221,18 @@
     <div class="steps-grid">
       <div class="card">
         <div class="step-num">1</div>
-        <h3 data-i18n="s1Title">Clone your channel voice</h3>
-        <p data-i18n="s1Desc">Forward 3–5 past posts. PostForge extracts your Style DNA: hook style, sentence cadence, formatting, and tone.</p>
+        <h3 data-i18n="s1Title">Clone &amp; audit by @username</h3>
+        <p data-i18n="s1Desc">Send @yourchannel (no admin rights needed) or forward 2–5 posts. PostForge scores your hooks and learns your Style DNA automatically.</p>
       </div>
       <div class="card">
         <div class="step-num">2</div>
         <h3 data-i18n="s2Title">Drop a voice note or link</h3>
-        <p data-i18n="s2Desc">Record a 1-min voice memo on a walk, paste an article, X post, or YouTube URL, or forward a competitor's post.</p>
+        <p data-i18n="s2Desc">Record a 1-min voice memo on a walk, paste an article, X post, or YouTube URL, or forward a post you want to react to.</p>
       </div>
       <div class="card">
         <div class="step-num">3</div>
         <h3 data-i18n="s3Title">Refine in 1 tap</h3>
-        <p data-i18n="s3Desc">Buttons below every draft: Shorter, Stronger Hook, New Angle, Add Poll, and RU↔EN Translation.</p>
+        <p data-i18n="s3Desc">Buttons below every draft: Shorter, Stronger Hook, New Angle, Add Poll, Punchier / RU↔EN, and Clean Plain Text.</p>
       </div>
     </div>
 
@@ -209,21 +242,35 @@
         <div>
           <h3>Free</h3>
           <div class="price-amount">$0</div>
-          <div class="price-alt" data-i18n="freeAlt">Test the voice cloning quality</div>
+          <div class="price-alt" data-i18n="freeAlt">Test voice cloning &amp; /audit</div>
           <ul class="price-list">
-            <li data-i18n="f1">5 post generations</li>
-            <li data-i18n="f2">1 custom style + 4 presets</li>
-            <li data-i18n="f3">+5 free posts per referral</li>
+            <li data-i18n="f1">3 posts + 0-credit live demo</li>
+            <li data-i18n="f2">Free /audit @channel + 4 presets</li>
+            <li data-i18n="f3">+5 free posts per friend invite</li>
           </ul>
         </div>
         <a class="price-btn" href="https://t.me/getpostforge_bot?start=landing_free" target="_blank" rel="noopener" data-i18n="startBtn">Launch Bot</a>
+      </div>
+
+      <div class="card price-card">
+        <div>
+          <h3>Starter</h3>
+          <div class="price-amount">$1.50 <span data-i18n="perMo" style="font-size:14px;color:var(--muted)">/ mo</span></div>
+          <div class="price-alt" data-i18n="starterAlt">59 ⭐ Stars (Card / Pay) · $1.50 USDT/TON</div>
+          <ul class="price-list">
+            <li data-i18n="st1">15 posts / month</li>
+            <li data-i18n="st2">1 cloned channel style</li>
+            <li data-i18n="st3">Low-risk impulse pack</li>
+          </ul>
+        </div>
+        <a class="price-btn" href="https://t.me/getpostforge_bot?start=landing_starter" target="_blank" rel="noopener" data-i18n="starterBtn">Get Starter</a>
       </div>
 
       <div class="card price-card featured">
         <div>
           <h3>Pro</h3>
           <div class="price-amount">$6 <span data-i18n="perMo" style="font-size:14px;color:var(--muted)">/ mo</span></div>
-          <div class="price-alt">299 ⭐ Stars · 6 USDT / TON</div>
+          <div class="price-alt" data-i18n="proAlt">299 ⭐ Stars (Card / Pay) · $6 USDT/TON</div>
           <ul class="price-list">
             <li data-i18n="p1">100 posts / month</li>
             <li data-i18n="p2">Up to 3 cloned channel styles</li>
@@ -237,7 +284,7 @@
         <div>
           <h3>Agency</h3>
           <div class="price-amount">$15 <span data-i18n="perMo" style="font-size:14px;color:var(--muted)">/ mo</span></div>
-          <div class="price-alt">799 ⭐ Stars · 15 USDT / TON</div>
+          <div class="price-alt" data-i18n="agencyAlt">799 ⭐ Stars (Card / Pay) · $15 USDT/TON</div>
           <ul class="price-list">
             <li data-i18n="a1">400 posts / month</li>
             <li data-i18n="a2">Up to 15 cloned styles</li>
@@ -248,80 +295,100 @@
       </div>
     </div>
 
-    <footer>PostForge · Built for Telegram creators · Stars &amp; USDT/TON</footer>
+    <footer data-i18n="footerText">PostForge · Built for Telegram channel owners · Card / Apple &amp; Google Pay (Stars ⭐) + USDT/TON</footer>
   </div>
 
   <script>
     const i18n = {
       ru: {
-        docTitle: "PostForge — Личный AI-редактор постов в стиле твоего Telegram-канала",
-        badge: "Без прав админа в канале · Оплата Stars / USDT / TON",
-        headline: "Твои голосовые и ссылки → готовые посты в личном стиле канала",
-        subtitle: "Забудь про шаблонные тексты «в современном мире». Перешли 3–5 своих постов — бот выучит твой стиль и за 15 секунд превратит голосовое, статью, пост из X или YouTube в пост, который звучит как ты.",
-        cta: "Попробовать 5 постов бесплатно →",
-        ctaNote: "Старт за 20 секунд · Карта не нужна",
+        docTitle: "PostForge — AI-редактор и клон стиля Telegram-канала",
+        badge: "Без прав админа · Карта / Apple Pay / Google Pay (Stars) и USDT/TON",
+        headline: "Голосовые и ссылки → готовые посты в стиле твоего Telegram-канала",
+        subtitle: "Забудь про шаблонные тексты «в современном мире». Отправь @канал для бесплатного AI-разбора хуков и клонирования стиля — и превращай голосовые, статьи, посты из X или YouTube в посты за 10 секунд.",
+        cta: "3 поста + демо бесплатно →",
+        ctaAudit: "📊 Бесплатный AI-разбор @канала →",
+        ctaNote: "Старт за 10 секунд · Демо не тратит кредиты · Карта не нужна",
         tabVoice: "🎙 Голосовое → Пост",
+        tabAudit: "📊 AI-разбор @канала",
         tabUrl: "🔗 Статья / X / YouTube → Выжимка",
         tabNotes: "📝 Сырые тезисы → Острый пост",
         beforeLabel: "Вход (что кинул автор)",
         afterLabel: "Выход PostForge (в стиле канала)",
         howTitle: "Как это работает",
-        s1Title: "Клонируешь стиль канала",
-        s1Desc: "Пересылаешь 3–5 своих постов. Бот вытаскивает твою ДНК стиля: хуки, ритм, длину абзацев и подачу.",
+        s1Title: "Клон стиля и аудит по @username",
+        s1Desc: "Пришли @канал (без прав админа) или 2–5 постов. Бот оценит хуки в /audit и снимет твою ДНК стиля.",
         s2Title: "Кидаешь голосовое или ссылку",
-        s2Desc: "Наговариваешь мысль на ходу, кидаешь статью, пост из X, YouTube-ролик или пересланный пост конкурента.",
+        s2Desc: "Наговариваешь мысль на ходу, кидаешь статью, пост из X, YouTube-ролик или тезисы — получаешь чистый Telegram HTML.",
         s3Title: "Докручиваешь в 1 клик",
-        s3Desc: "Кнопки под постом: «Короче», «Острее хук», «Другой угол», «Опрос», «Перевод RU↔EN».",
+        s3Desc: "Кнопки под постом: «Короче», «Острее хук», «Другой угол», «Опрос», «Перевод RU↔EN» и «Чистый текст».",
         pricingTitle: "Простые тарифы",
         perMo: "/ мес",
-        freeAlt: "Чтобы проверить качество",
-        f1: "5 генераций постов",
-        f2: "1 свой стиль + 4 пресета",
+        freeAlt: "Проверить качество и /audit",
+        f1: "3 поста + бесплатное живое демо",
+        f2: "Бесплатный /audit @канала + 4 пресета",
         f3: "+5 постов за каждого друга",
+        starterAlt: "59 ⭐ Stars (Карта / Pay) · $1.50 USDT/TON",
+        st1: "15 постов на 30 дней",
+        st2: "1 клонированный стиль канала",
+        st3: "Быстрый старт за ~110 ₽ / $1.50",
+        proAlt: "299 ⭐ Stars (Карта / Pay) · $6 USDT/TON",
         p1: "100 постов в месяц",
         p2: "До 3 клонированных стилей",
         p3: "Голосовые, статьи, X, YouTube, опросы",
+        agencyAlt: "799 ⭐ Stars (Карта / Pay) · $15 USDT/TON",
         a1: "400 постов в месяц",
         a2: "До 15 стилей под сетку каналов",
         a3: "Идеально для SMM и редакций",
         startBtn: "Запустить бота",
+        starterBtn: "Выбрать Starter",
         proBtn: "Выбрать Pro",
-        agencyBtn: "Выбрать Agency"
+        agencyBtn: "Выбрать Agency",
+        footerText: "PostForge · Для владельцев Telegram-каналов · Карта / Apple & Google Pay (Stars ⭐) + USDT/TON"
       },
       en: {
-        docTitle: "PostForge — AI Telegram Channel Post Editor in Your Exact Voice",
-        badge: "No channel admin rights needed · Pay with Stars / USDT / TON",
+        docTitle: "PostForge — AI Telegram Channel Post Editor & Voice Cloner",
+        badge: "No admin rights needed · Card / Apple Pay / Google Pay (Stars) + USDT/TON",
         headline: "Turn voice notes & links into posts in your channel's exact voice",
-        subtitle: "No more generic 'In today's fast-paced world' AI fluff. Forward 3–5 of your posts once — PostForge learns your rhythm and turns voice memos, articles, X posts, or YouTube videos into publish-ready posts in 15 seconds.",
-        cta: "Try 5 Posts Free →",
-        ctaNote: "20-second setup · No credit card required",
+        subtitle: "No more generic AI fluff. Drop @yourchannel once for a Free AI Channel Audit & 1-click Style DNA cloning — then turn voice memos, articles, X posts, or YouTube videos into publish-ready Telegram posts in 10 seconds.",
+        cta: "Try 3 Free Posts + Demo →",
+        ctaAudit: "📊 Run Free Channel Audit →",
+        ctaNote: "10-second setup · 0-credit live demo · No card required",
         tabVoice: "🎙 Voice → Post",
+        tabAudit: "📊 Free Channel Audit",
         tabUrl: "🔗 Article / X / YouTube → Brief",
         tabNotes: "📝 Rough Notes → Sharp Post",
         beforeLabel: "Input (what you dropped)",
         afterLabel: "PostForge Output (your channel DNA)",
         howTitle: "How it works",
-        s1Title: "Clone your channel voice",
-        s1Desc: "Forward 3–5 past posts. PostForge extracts your Style DNA: hook style, sentence cadence, formatting, and tone.",
+        s1Title: "Clone & audit by @username",
+        s1Desc: "Send @yourchannel (no admin rights needed) or forward 2–5 posts. PostForge scores your hooks and learns your Style DNA automatically.",
         s2Title: "Drop a voice note or link",
-        s2Desc: "Record a 1-min voice memo on a walk, paste an article, X post, or YouTube URL, or forward a competitor's post.",
+        s2Desc: "Record a 1-min voice memo on a walk, paste an article, X post, or YouTube URL, or forward a post you want to react to.",
         s3Title: "Refine in 1 tap",
-        s3Desc: "Buttons below every draft: Shorter, Stronger Hook, New Angle, Add Poll, and RU↔EN Translation.",
+        s3Desc: "Buttons below every draft: Shorter, Stronger Hook, New Angle, Add Poll, Punchier / RU↔EN, and Clean Plain Text.",
         pricingTitle: "Simple pricing",
         perMo: "/ mo",
-        freeAlt: "Test the voice cloning quality",
-        f1: "5 post generations",
-        f2: "1 custom style + 4 presets",
-        f3: "+5 free posts per referral",
+        freeAlt: "Test voice cloning & /audit",
+        f1: "3 posts + 0-credit live demo",
+        f2: "Free /audit @channel + 4 presets",
+        f3: "+5 free posts per friend invite",
+        starterAlt: "59 ⭐ Stars (Card / Pay) · $1.50 USDT/TON",
+        st1: "15 posts / month",
+        st2: "1 cloned channel style",
+        st3: "Low-risk starter pack",
+        proAlt: "299 ⭐ Stars (Card / Pay) · $6 USDT/TON",
         p1: "100 posts / month",
         p2: "Up to 3 cloned channel styles",
         p3: "Voice memos, articles, X, YouTube & polls",
+        agencyAlt: "799 ⭐ Stars (Card / Pay) · $15 USDT/TON",
         a1: "400 posts / month",
         a2: "Up to 15 cloned styles",
         a3: "Built for SMM teams & channel networks",
         startBtn: "Launch Bot",
+        starterBtn: "Get Starter",
         proBtn: "Get Pro",
-        agencyBtn: "Get Agency"
+        agencyBtn: "Get Agency",
+        footerText: "PostForge · Built for Telegram channel owners · Card / Apple & Google Pay (Stars ⭐) + USDT/TON"
       }
     };
 
@@ -330,6 +397,10 @@
         voice: {
           before: "🎙 Голосовое (0:42):\n«Короче, сегодня общался с клиентом, он слил $1200 на рекламу у блогеров, потому что не проверял отписки через инвайт-ссылки. Просто кидал общую ссылку на канал. Надо объяснить людям, что без трекинга ссылок реклама — это лотерея.»",
           after: "<b>Почему $1200 на рекламу в Telegram сгорают в первую неделю</b>\n\nСегодня разбирали кейс клиента: купил 4 посева, подписчики вроде пришли, а охваты не выросли.\n\nОшибка банальная — всех вели на публичный @username. Через неделю 70% отписались, но кто именно привёл мусорный трафик — понять невозможно.\n\n<blockquote>Правило простое: 1 размещение = 1 уникальная инвайт-ссылка.</blockquote>\n\nНе видите отток по каждому каналу на 7-й день — значит не покупаете рекламу, а играете в рулетку."
+        },
+        audit: {
+          before: "Команда в боте:\n/audit @yourchannel\n\n(Бот сам читает последние публичные посты канала — права админа не нужны)",
+          after: "<b>📊 AI-разбор канала @yourchannel</b>\n\n• <b>Архетип голоса:</b> Практик-редактор\n• <b>Оценка хуков:</b> 7.4/10 · <b>Читаемость:</b> 8.8/10\n• <b>Сильная сторона:</b> живые кейсы из практики.\n• <b>Точка роста:</b> первые 2 строки перегружены вступлением — вывод спрятан в конец.\n\n<b>Усиленный хук для вашего поста:</b>\n<blockquote>Я проверил 12 запусков в Telegram — 9 слили бюджет из-за одной настройки в /plan.</blockquote>"
         },
         url: {
           before: "🔗 https://example.com/telegram-stars-guide\n(Длинная англоязычная статья на 2500 слов про вывод Telegram Stars через Fragment без обязательного KYC от 1000 Stars и холд 21 день.)",
@@ -344,6 +415,10 @@
         voice: {
           before: "🎙 Voice memo (0:42):\n'Just talked to a founder who burned $1,200 on Telegram channel promos because he used his public @username instead of unique invite links. Zero clue which channel brought bots vs real buyers.'",
           after: "<b>How $1,200 in Telegram ads vanishes in 7 days</b>\n\nAudited a founder's promo campaign today: 4 sponsored posts, decent join spike, flat sales.\n\nThe mistake? Every promo pointed to their public @username. Half the crowd unsubscribed by Day 7 — with zero way to tell which channel sent junk traffic.\n\n<blockquote>One rule fixes this: 1 placement = 1 tracked invite link.</blockquote>\n\nIf you can't measure Day-7 retention per source, you're guessing, not buying traffic."
+        },
+        audit: {
+          before: "Command in bot:\n/audit @yourchannel\n\n(Reads recent public posts automatically — zero admin rights needed)",
+          after: "<b>📊 Channel Audit: @yourchannel</b>\n\n• <b>Voice Archetype:</b> Sharp Practitioner\n• <b>Hook Score:</b> 7.4/10 · <b>Readability:</b> 8.8/10\n• <b>What Works:</b> Real operational examples.\n• <b>Growth Leak:</b> Opening lines bury the sharpest number at the bottom.\n\n<b>Rewritten Scroll-Stopping Hook:</b>\n<blockquote>I audited 12 Telegram launches this month — 9 burned budget on the same mistake.</blockquote>"
         },
         url: {
           before: "🔗 https://example.com/telegram-stars-guide\n(2,500-word article covering Telegram Stars payouts on Fragment, 1,000 Stars minimum, 21-day hold window, and TON payouts.)",

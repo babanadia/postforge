@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://babanadia.github.io/postforge/sitemap.xml
