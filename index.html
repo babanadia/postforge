@@ -255,12 +255,12 @@
       <div class="card price-card">
         <div>
           <h3>Starter</h3>
-          <div class="price-amount">$1.50 <span data-i18n="perMo" style="font-size:14px;color:var(--muted)">/ mo</span></div>
-          <div class="price-alt" data-i18n="starterAlt">59 ⭐ Stars (Card / Pay) · $1.50 USDT/TON</div>
+          <div class="price-amount">$0.99 <span data-i18n="perMo" style="font-size:14px;color:var(--muted)">/ mo</span></div>
+          <div class="price-alt" data-i18n="starterAlt">49 ⭐ Stars (Card / Pay) · $0.99 USDT/TON</div>
           <ul class="price-list">
             <li data-i18n="st1">15 posts / month</li>
             <li data-i18n="st2">1 cloned channel style</li>
-            <li data-i18n="st3">Low-risk impulse pack</li>
+            <li data-i18n="st3">Fits 50 ⭐ min bundle (&lt;$1 impulse pack)</li>
           </ul>
         </div>
         <a class="price-btn" href="https://t.me/getpostforge_bot?start=landing_starter" target="_blank" rel="noopener" data-i18n="starterBtn">Get Starter</a>
@@ -327,10 +327,10 @@
         f1: "3 поста + бесплатное живое демо",
         f2: "Бесплатный /audit @канала + 4 пресета",
         f3: "+5 постов за каждого друга",
-        starterAlt: "59 ⭐ Stars (Карта / Pay) · $1.50 USDT/TON",
+        starterAlt: "49 ⭐ Stars (Карта / Pay) · $0.99 USDT/TON",
         st1: "15 постов на 30 дней",
         st2: "1 клонированный стиль канала",
-        st3: "Быстрый старт за ~110 ₽ / $1.50",
+        st3: "Укладывается в мин. пакет 50 ⭐ (~95 ₽ / $0.99)",
         proAlt: "299 ⭐ Stars (Карта / Pay) · $6 USDT/TON",
         p1: "100 постов в месяц",
         p2: "До 3 клонированных стилей",
@@ -372,10 +372,10 @@
         f1: "3 posts + 0-credit live demo",
         f2: "Free /audit @channel + 4 presets",
         f3: "+5 free posts per friend invite",
-        starterAlt: "59 ⭐ Stars (Card / Pay) · $1.50 USDT/TON",
+        starterAlt: "49 ⭐ Stars (Card / Pay) · $0.99 USDT/TON",
         st1: "15 posts / month",
         st2: "1 cloned channel style",
-        st3: "Low-risk starter pack",
+        st3: "Fits 50 ⭐ min bundle (<$1 impulse pack)",
         proAlt: "299 ⭐ Stars (Card / Pay) · $6 USDT/TON",
         p1: "100 posts / month",
         p2: "Up to 3 cloned channel styles",
@@ -446,7 +446,9 @@
     const cleanSrc = rawSrc.replace(/[^a-z0-9_-]/g, "").slice(0, 32);
     if (cleanSrc) {
       document.querySelectorAll('a[href^="https://t.me/getpostforge_bot"]').forEach(link => {
-        link.href = "https://t.me/getpostforge_bot?start=web_" + cleanSrc;
+        if (!link.href.includes("start=landing_audit")) {
+          link.href = "https://t.me/getpostforge_bot?start=web_" + cleanSrc;
+        }
       });
     }
 
