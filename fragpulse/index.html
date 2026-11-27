@@ -148,10 +148,16 @@
         <div class="stat-box"><div class="stat-lbl">Open Setups</div><div id="stOpen" class="stat-val" style="color:var(--accent)">--</div></div>
         <div class="stat-box"><div class="stat-lbl">Sniped Proof</div><div id="stSniped" class="stat-val" style="color:var(--emerald)">--</div></div>
       </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+        <button class="pill-status pro" data-bank="all" onclick="setBankFilter('all', this)">All Deals</button>
+        <button class="pill-status" data-bank="low" onclick="setBankFilter('low', this)">💎 ≤10 TON</button>
+        <button class="pill-status" data-bank="mid" onclick="setBankFilter('mid', this)">⚡ ≤25 TON</button>
+        <button class="pill-status" data-bank="whale" onclick="setBankFilter('whale', this)">🐋 25+ TON</button>
+      </div>
       <div id="arbBanner" class="deal-card" style="border-color:rgba(16,185,129,0.3);display:none;">
-        <div style="font-size:13px;font-weight:700;color:#34d399;">🔓 1 Proof Setup Open — A+/A Mint IDs Masked</div>
-        <div class="muted" style="margin-top:4px;">Verify our live orderbook spread on Fragment right now, then unlock all hidden A+/A deals &lt;60s sniper alerts for 69 ⭐ ($1.39).</div>
-        <div class="btn-row"><button class="btn btn-emerald" onclick="openPayModal()">⚡ Unlock 24h Sniper Pass — 69 ⭐</button></div>
+        <div style="font-size:13px;font-weight:700;color:#34d399;">🔓 Proof Deal #2 Open — High-Alpha IDs Masked</div>
+        <div class="muted" style="margin-top:4px;">Verify deal #2 live on Fragment right now, peek any 1 deal for 29 ⭐, or unlock ALL deals & &lt;60s sniper alerts for 69 ⭐ ($1.39).</div>
+        <div class="btn-row"><button class="btn btn-emerald" onclick="openPayModal(0)">⚡ Unlock All Deals (24h) — 69 ⭐</button></div>
       </div>
       <div id="dealsList"></div>
     </div>
@@ -159,7 +165,12 @@
     <div id="tab-appraise" class="tab">
       <div class="deal-card">
         <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🔍 Gift Trait Appraiser</div>
-        <div class="muted" style="margin-bottom:10px;">Paste <code>t.me/nft/PlushPepe-2014</code> or <code>astralshard-1274</code></div>
+        <div class="muted" style="margin-bottom:8px;">Paste <code>t.me/nft/PlushPepe-2014</code> or tap a live example:</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;">
+          <button class="pill-status" onclick="quickAppraise('PlushPepe-2014')">🐸 PlushPepe #2014</button>
+          <button class="pill-status" onclick="quickAppraise('SwissWatch-19134')">⌚ SwissWatch #19134</button>
+          <button class="pill-status" onclick="quickAppraise('BigYear-22645')">🎉 BigYear #22645</button>
+        </div>
         <div class="input-group">
           <input id="giftQuery" type="text" placeholder="t.me/nft/PlushPepe-2014" />
           <button class="btn btn-primary" style="flex:0 0 92px;" onclick="runAppraise()">Appraise</button>
@@ -195,7 +206,7 @@
         <input id="prefMinRoi" type="number" value="20" style="width:100%;margin:4px 0 12px;" />
         <div class="btn-row">
           <button class="btn btn-primary" onclick="saveAlerts(true)">Save & Enable Sniper</button>
-          <button class="btn btn-ghost" onclick="openPayModal()">Plans (69 ⭐)</button>
+          <button class="btn btn-ghost" onclick="openPayModal(0)">Plans (69 ⭐)</button>
         </div>
         <div id="alertStatus" class="muted" style="margin-top:10px;"></div>
       </div>
@@ -227,6 +238,8 @@
     const API_BASE = window.location.hostname.includes("github.io") ? "https://45-61-144-243.sslip.io" : "";
     const INIT_DATA = tg ? (tg.initData || "") : "";
     let STATE = { is_pro: false, deals: [], sniped: [], collections: [], plans: [] };
+    let BANK_FILTER = "all";
+    let ACTIVE_SIGNAL_ID = 0;
 
     function esc(s) {
       return String(s || "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -239,7 +252,23 @@
       el.classList.add("active");
     }
 
-    function openPayModal() { document.getElementById("payModal").classList.add("open"); }
+    function setBankFilter(mode, el) {
+      BANK_FILTER = mode;
+      document.querySelectorAll("[data-bank]").forEach(b => b.classList.remove("pro"));
+      if (el) el.classList.add("pro");
+      renderDeals();
+    }
+
+    function quickAppraise(q) {
+      document.getElementById("giftQuery").value = q;
+      runAppraise();
+    }
+
+    function openPayModal(sigId) {
+      ACTIVE_SIGNAL_ID = sigId || 0;
+      document.getElementById("payMsg").textContent = "";
+      document.getElementById("payModal").classList.add("open");
+    }
     function closePayModal() { document.getElementById("payModal").classList.remove("open"); }
 
     async function loadBootstrap() {
@@ -253,6 +282,46 @@
       } catch (e) {
         document.getElementById("snipedTicker").textContent = "⚠️ Connecting to FragPulse node...";
       }
+    }
+
+    function renderDeals() {
+      const dList = document.getElementById("dealsList");
+      const filtered = (STATE.deals || []).filter(d => {
+        const a = parseFloat(d.ask_ton || 0);
+        if (BANK_FILTER === "low") return a <= 10.0;
+        if (BANK_FILTER === "mid") return a <= 25.0;
+        if (BANK_FILTER === "whale") return a > 25.0;
+        return true;
+      });
+      if (!filtered.length) {
+        dList.innerHTML = `<div class="deal-card muted">🛰 No setups in this price bracket right now — tap All Deals!</div>`;
+        return;
+      }
+      dList.innerHTML = filtered.map(d => {
+        const gCls = d.grade === "A+" ? "grade-Ap" : (d.grade === "A" ? "grade-A" : "grade-B");
+        const mintBadge = d.locked ? "🔒 #████" : `#${esc(d.mint_num)}`;
+        const img = esc(d.item_image_url || d.coll_thumb_url || "");
+        const actionBtn = d.locked
+          ? `<button class="btn btn-ghost" onclick="payStars('fp_peek1', ${d.id})">👁 Peek #ID (29 ⭐)</button><button class="btn btn-emerald" onclick="openPayModal(${d.id})">⚡ All 24h (69 ⭐)</button>`
+          : `<a class="btn btn-primary" href="${esc(d.buy_url)}" target="_blank">⚡ Buy / Inspect on Fragment</a>`;
+        return `
+          <div class="deal-card">
+            <div class="deal-top">
+              <img class="thumb ${d.locked ? "blurred" : ""}" src="${img}" alt="" />
+              <div class="deal-meta">
+                <div class="deal-title"><span class="grade ${gCls}">${esc(d.grade)}</span> ${esc(d.coll_name)} <span style="color:var(--accent)">${mintBadge}</span></div>
+                <div class="trait-sub">${esc(d.trait_label)} • ${d.trait_depth} listed</div>
+              </div>
+              <div class="profit-pill">+${d.net_profit_ton} TON<div class="profit-sub">+${d.roi_pct}% ROI</div></div>
+            </div>
+            <div class="orderbook">
+              <div class="ob-cell"><div class="ob-k">Ask #1</div><div class="ob-v">${d.ask_ton} TON</div></div>
+              <div class="ob-cell"><div class="ob-k">Next Floor #2</div><div class="ob-v">${d.ref_floor_ton} TON</div></div>
+              <div class="ob-cell"><div class="ob-k">Wall #3</div><div class="ob-v">${d.wall_3_ton} TON</div></div>
+            </div>
+            <div class="btn-row">${actionBtn}</div>
+          </div>`;
+      }).join("");
     }
 
     function renderAll() {
@@ -279,37 +348,7 @@
         document.getElementById("snipedTicker").textContent = `🛰 Indexing ${STATE.collections.length || "100+"} Fragment gift collections in real time`;
       }
 
-      const dList = document.getElementById("dealsList");
-      if (!STATE.deals.length) {
-        dList.innerHTML = `<div class="deal-card muted">🛰 Scanning Fragment trait orderbooks... Check back in 15 seconds.</div>`;
-      } else {
-        dList.innerHTML = STATE.deals.map(d => {
-          const gCls = d.grade === "A+" ? "grade-Ap" : (d.grade === "A" ? "grade-A" : "grade-B");
-          const mintBadge = d.locked ? "🔒 #████" : `#${esc(d.mint_num)}`;
-          const img = esc(d.item_image_url || d.coll_thumb_url || "");
-          const actionBtn = d.locked
-            ? `<button class="btn btn-emerald" onclick="openPayModal()">🔓 Unblur Mint ID & URL — 69 ⭐</button>`
-            : `<a class="btn btn-primary" href="${esc(d.buy_url)}" target="_blank">⚡ Buy / Inspect on Fragment</a>`;
-          return `
-            <div class="deal-card">
-              <div class="deal-top">
-                <img class="thumb ${d.locked ? "blurred" : ""}" src="${img}" alt="" />
-                <div class="deal-meta">
-                  <div class="deal-title"><span class="grade ${gCls}">${esc(d.grade)}</span> ${esc(d.coll_name)} <span style="color:var(--accent)">${mintBadge}</span></div>
-                  <div class="trait-sub">${esc(d.trait_label)} • ${d.trait_depth} listed</div>
-                </div>
-                <div class="profit-pill">+${d.net_profit_ton} TON<div class="profit-sub">+${d.roi_pct}% ROI</div></div>
-              </div>
-              <div class="orderbook">
-                <div class="ob-cell"><div class="ob-k">Ask #1</div><div class="ob-v">${d.ask_ton} TON</div></div>
-                <div class="ob-cell"><div class="ob-k">Next Floor #2</div><div class="ob-v">${d.ref_floor_ton} TON</div></div>
-                <div class="ob-cell"><div class="ob-k">Wall #3</div><div class="ob-v">${d.wall_3_ton} TON</div></div>
-              </div>
-              <div class="btn-row">${actionBtn}</div>
-            </div>`;
-        }).join("");
-      }
-
+      renderDeals();
       renderCollections();
 
       document.getElementById("plansContainer").innerHTML = (STATE.plans || []).map(p => `
@@ -320,8 +359,8 @@
           </div>
           <div class="muted" style="margin:4px 0 8px;">${esc(p.desc)}</div>
           <div class="btn-row" style="margin-top:0;">
-            <button class="btn btn-emerald" onclick="payStars('${esc(p.code)}')">⭐ Pay ${p.stars} Stars</button>
-            <button class="btn btn-ghost" onclick="payCrypto('${esc(p.code)}')">💎 $${esc(p.usd)} TON/USDT</button>
+            <button class="btn btn-emerald" onclick="payStars('${esc(p.code)}', 0)">⭐ Pay ${p.stars} Stars</button>
+            <button class="btn btn-ghost" onclick="payCrypto('${esc(p.code)}', 0)">💎 $${esc(p.usd)} TON/USDT</button>
           </div>
         </div>`).join("");
 
@@ -354,7 +393,7 @@
         body: JSON.stringify({ init_data: INIT_DATA, query: q })
       });
       const d = await r.json();
-      if (!r.ok) { box.innerHTML = `<div style="color:var(--rose);font-size:13px;">${esc(d.detail || "Error")}</div>`; if (r.status === 402) openPayModal(); return; }
+      if (!r.ok) { box.innerHTML = `<div style="color:var(--rose);font-size:13px;">${esc(d.detail || "Error")}</div>`; if (r.status === 402) openPayModal(0); return; }
       box.innerHTML = `
         <div style="margin-top:10px;border-top:1px solid rgba(148,163,184,0.15);padding-top:10px;">
           <div style="display:flex;gap:10px;align-items:center;">
@@ -383,7 +422,7 @@
         body: JSON.stringify({ init_data: INIT_DATA, wallet: w })
       });
       const d = await r.json();
-      if (!r.ok) { box.innerHTML = `<div style="color:var(--rose);font-size:13px;">${esc(d.detail || "Error")}</div>`; if (r.status === 402) openPayModal(); return; }
+      if (!r.ok) { box.innerHTML = `<div style="color:var(--rose);font-size:13px;">${esc(d.detail || "Error")}</div>`; if (r.status === 402) openPayModal(0); return; }
       box.innerHTML = `
         <div style="margin-top:8px;font-weight:700;color:var(--emerald);font-family:var(--mono);">Gifts: ${d.gift_count} • Portfolio Floor: ${d.total_floor_ton} TON (Net ~${d.net_liquidation_ton})</div>
         ${(d.items || []).slice(0, 12).map(it => `<div class="muted" style="margin-top:4px;">• <b>${esc(it.coll_name)} #${it.mint_num}</b> — ${it.floor_ton} TON ${it.backdrop ? "(" + esc(it.backdrop) + ")" : ""}</div>`).join("")}`;
@@ -399,18 +438,23 @@
       const d = await r.json();
       if (!r.ok) { document.getElementById("alertStatus").textContent = d.detail; return; }
       document.getElementById("alertStatus").textContent = d.is_pro ? "✅ Sniper preferences saved & active!" : "⚠️ Preferences saved! Activate 24h Pass (69 ⭐) to turn on push alerts.";
-      if (!d.is_pro) openPayModal();
+      if (!d.is_pro) openPayModal(0);
     }
 
-    async function payStars(plan_code) {
+    async function payStars(plan_code, sigId) {
+      const sid = sigId || ACTIVE_SIGNAL_ID || 0;
+      if (!INIT_DATA) {
+        window.open(`https://t.me/pingscout_ai_bot?start=buy_${plan_code}_${sid}`, "_blank");
+        return;
+      }
       const msg = document.getElementById("payMsg");
       msg.textContent = "Creating Telegram Stars invoice...";
       const r = await fetch(API_BASE + "/api/invoice/stars", {
         method: "POST", headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ init_data: INIT_DATA, plan_code })
+        body: JSON.stringify({ init_data: INIT_DATA, plan_code, signal_id: sid })
       });
       const d = await r.json();
-      if (!r.ok) { msg.textContent = d.detail || "Open inside @pingscout_ai_bot to pay with Stars."; return; }
+      if (!r.ok) { window.open(`https://t.me/pingscout_ai_bot?start=buy_${plan_code}_${sid}`, "_blank"); return; }
       if (tg && tg.openInvoice) {
         tg.openInvoice(d.invoice_url, status => {
           if (status === "paid") { closePayModal(); setTimeout(loadBootstrap, 800); }
@@ -421,12 +465,17 @@
       }
     }
 
-    async function payCrypto(plan_code) {
+    async function payCrypto(plan_code, sigId) {
+      const sid = sigId || ACTIVE_SIGNAL_ID || 0;
+      if (!INIT_DATA) {
+        window.open(`https://t.me/pingscout_ai_bot?start=buy_${plan_code}_${sid}`, "_blank");
+        return;
+      }
       const msg = document.getElementById("payMsg");
       msg.textContent = "Creating @CryptoBot invoice...";
       const r = await fetch(API_BASE + "/api/invoice/crypto", {
         method: "POST", headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ init_data: INIT_DATA, plan_code })
+        body: JSON.stringify({ init_data: INIT_DATA, plan_code, signal_id: sid })
       });
       const d = await r.json();
       if (!r.ok) { msg.textContent = d.detail || "Error"; return; }
