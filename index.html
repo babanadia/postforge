@@ -2,483 +2,439 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PostForge — AI Telegram Channel Post Editor &amp; Voice Cloner</title>
-  <meta name="description" content="Clone your Telegram channel's writing style by @username in 1 click, get a Free AI Channel Audit, and turn voice memos, articles, X posts, or YouTube links into ready posts in 10 seconds." />
-  <link rel="canonical" href="https://babanadia.github.io/postforge/" />
-  <link rel="icon" type="image/jpeg" href="logo.jpg" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://babanadia.github.io/postforge/" />
-  <meta property="og:title" content="PostForge — AI Telegram Post Editor &amp; Channel Voice Cloner" />
-  <meta property="og:description" content="Clone your channel's voice by @username, run a Free AI Channel Audit, and turn voice notes or links into ready posts in 10s. 2 free posts + instant live demo." />
-  <meta property="og:image" content="https://babanadia.github.io/postforge/logo.jpg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="PostForge — AI Telegram Post Editor &amp; Channel Voice Cloner" />
-  <meta name="twitter:description" content="Clone your Telegram channel style by @username. Free AI hook audit + voice notes, articles, X &amp; YouTube to publish-ready HTML in 10s." />
-  <meta name="twitter:image" content="https://babanadia.github.io/postforge/logo.jpg" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "PostForge",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Telegram, iOS, Android, Web, Windows, macOS",
-    "url": "https://babanadia.github.io/postforge/",
-    "sameAs": "https://t.me/getpostforge_bot",
-    "description": "AI Telegram post editor that clones any channel's Style DNA from @username or 3-5 posts, audits channel hooks for free, and turns voice notes, articles, X posts, and YouTube videos into publish-ready Telegram HTML.",
-    "offers": {
-      "@type": "AggregateOffer",
-      "priceCurrency": "USD",
-      "lowPrice": "0",
-      "highPrice": "15",
-      "offerCount": "4"
-    }
-  }
-  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>FragPulse — Gift & TON Arbitrage Terminal</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
-      --bg: #0b0e14;
-      --card: #131823;
-      --card-border: #232b3b;
-      --text: #eef2f8;
-      --muted: #98a3b8;
+      --bg: #0b0f19;
+      --card: rgba(17, 24, 39, 0.85);
+      --border: rgba(56, 189, 248, 0.16);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
       --accent: #38bdf8;
-      --accent-2: #818cf8;
-      --green: #34d399;
-      --radius: 16px;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
-      background: radial-gradient(circle at 20% 0%, #152238 0%, var(--bg) 55%);
+      background: radial-gradient(circle at top right, #0f1c34 0%, var(--bg) 52%);
       color: var(--text);
-      line-height: 1.55;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
       min-height: 100vh;
+      padding-bottom: 84px;
     }
-    .container { max-width: 1120px; margin: 0 auto; padding: 24px 20px 64px; }
-    header {
+    .header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 14px;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 12px 0 36px;
     }
-    .brand {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-weight: 800; font-size: 20px; letter-spacing: -0.02em;
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; letter-spacing: -0.02em; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 10px var(--emerald); }
+    .pill-status {
+      font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3);
+      cursor: pointer;
     }
-    .brand-logo {
-      width: 32px; height: 32px; border-radius: 8px;
-      object-fit: cover; border: 1px solid var(--card-border);
+    .pill-status.pro { background: rgba(16, 185, 129, 0.16); color: var(--emerald); border-color: rgba(16, 185, 129, 0.35); }
+    .ticker {
+      background: rgba(16, 185, 129, 0.08);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+      padding: 7px 14px;
+      font-size: 12px; color: #cbd5e1;
+      white-space: nowrap; overflow-x: auto;
     }
-    .brand span { color: var(--accent); }
-    .lang-btn {
-      background: var(--card); border: 1px solid var(--card-border); color: var(--text);
-      padding: 8px 14px; border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600;
+    .container { max-width: 720px; margin: 0 auto; padding: 12px; }
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px;
     }
-    .lang-btn:hover { border-color: var(--accent); }
-    .hero { text-align: center; padding: 28px 0 44px; }
-    .badge {
-      display: inline-block; padding: 6px 14px; border-radius: 999px;
-      background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35);
-      color: var(--accent); font-size: 13px; font-weight: 600; margin-bottom: 18px;
+    .stat-box {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px;
     }
-    h1 {
-      font-size: clamp(30px, 5vw, 50px); line-height: 1.12; font-weight: 800;
-      letter-spacing: -0.03em; max-width: 840px; margin: 0 auto 18px;
+    .stat-lbl { font-size: 10px; text-transform: uppercase; color: var(--muted); letter-spacing: 0.04em; }
+    .stat-val { font-family: var(--mono); font-size: 15px; font-weight: 700; margin-top: 2px; color: var(--text); }
+    .deal-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 12px; margin-bottom: 10px; position: relative; overflow: hidden;
     }
-    .subtitle {
-      color: var(--muted); font-size: clamp(16px, 2.1vw, 19px);
-      max-width: 680px; margin: 0 auto 30px;
+    .deal-top { display: flex; gap: 10px; align-items: center; }
+    .thumb {
+      width: 48px; height: 48px; border-radius: 12px; object-fit: cover;
+      background: #1e293b; border: 1px solid rgba(255,255,255,0.08);
     }
-    .cta-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .cta-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #06101c; font-weight: 700; text-decoration: none;
-      padding: 14px 26px; border-radius: 12px; font-size: 16px;
-      transition: transform .15s ease, opacity .15s ease;
+    .thumb.blurred { filter: blur(4px) brightness(0.75); }
+    .deal-meta { flex: 1; min-width: 0; }
+    .deal-title { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .grade { font-family: var(--mono); font-size: 11px; font-weight: 800; padding: 2px 6px; border-radius: 6px; }
+    .grade-Ap { background: rgba(16, 185, 129, 0.22); color: #34d399; }
+    .grade-A { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
+    .grade-B { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .trait-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .profit-pill {
+      font-family: var(--mono); text-align: right; font-weight: 700; font-size: 13px; color: var(--emerald);
     }
-    .cta-primary:hover { transform: translateY(-1px); opacity: 0.94; }
-    .cta-secondary {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--card); border: 1px solid var(--card-border);
-      color: var(--text); font-weight: 700; text-decoration: none;
-      padding: 14px 22px; border-radius: 12px; font-size: 16px;
-      transition: border-color .15s ease, transform .15s ease;
+    .profit-sub { font-size: 11px; color: #6ee7b7; }
+    .orderbook {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+      margin-top: 10px; padding-top: 9px; border-top: 1px solid rgba(148,163,184,0.12);
+      font-family: var(--mono); font-size: 11px;
     }
-    .cta-secondary:hover { border-color: var(--accent); transform: translateY(-1px); }
-    .cta-note { margin-top: 12px; color: var(--muted); font-size: 13px; }
-
-    .demo-section {
-      margin: 36px 0 56px; background: var(--card); border: 1px solid var(--card-border);
-      border-radius: var(--radius); padding: 24px;
+    .ob-cell { background: rgba(15, 23, 42, 0.7); padding: 6px 8px; border-radius: 8px; }
+    .ob-k { color: var(--muted); font-size: 10px; }
+    .ob-v { color: var(--text); font-weight: 700; margin-top: 2px; }
+    .btn-row { display: flex; gap: 8px; margin-top: 10px; }
+    .btn {
+      flex: 1; border: none; border-radius: 10px; padding: 10px 12px; font-weight: 600; font-size: 13px;
+      cursor: pointer; text-align: center; text-decoration: none; display: inline-block;
     }
-    .demo-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-    .demo-tab {
-      background: #0d111a; border: 1px solid var(--card-border); color: var(--muted);
-      padding: 9px 15px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: 600;
+    .btn-primary { background: linear-gradient(135deg, #0284c7, #0ea5e9); color: #fff; }
+    .btn-emerald { background: linear-gradient(135deg, #059669, #10b981); color: #052e16; font-weight: 700; }
+    .btn-ghost { background: rgba(148,163,184,0.12); color: var(--text); border: 1px solid rgba(148,163,184,0.2); }
+    .input-group { display: flex; gap: 8px; margin-bottom: 10px; }
+    input[type="text"], input[type="number"] {
+      flex: 1; background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border); border-radius: 10px;
+      color: var(--text); padding: 10px 12px; font-size: 14px; outline: none;
     }
-    .demo-tab.active {
-      border-color: var(--accent); color: var(--text); background: rgba(56, 189, 248, 0.1);
+    input:focus { border-color: var(--accent); }
+    .coll-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-bottom: 8px;
     }
-    .demo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-    @media (max-width: 760px) { .demo-grid { grid-template-columns: 1fr; } }
-    .demo-box {
-      background: #0b0f17; border: 1px solid var(--card-border);
-      border-radius: 12px; padding: 18px;
+    .nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+      background: rgba(11, 15, 25, 0.96); backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(4, 1fr); padding: 6px 4px 12px;
     }
-    .demo-label {
-      font-size: 12px; text-transform: uppercase; letter-spacing: 0.06em;
-      color: var(--muted); margin-bottom: 10px; font-weight: 700;
+    .nav-btn {
+      background: none; border: none; color: var(--muted); font-size: 11px; font-weight: 600;
+      display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 4px;
     }
-    .demo-label.good { color: var(--green); }
-    .demo-content { font-size: 14px; white-space: pre-line; color: #dbe3f0; }
-    .demo-content blockquote {
-      border-left: 3px solid var(--accent); padding-left: 12px; margin: 10px 0; color: #c4d1e6;
+    .nav-btn.active { color: var(--accent); }
+    .tab { display: none; }
+    .tab.active { display: block; }
+    .modal-bg {
+      position: fixed; inset: 0; background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(6px);
+      z-index: 50; display: none; align-items: flex-end; justify-content: center;
     }
-
-    .section-title { font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 24px; }
-    .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 56px; }
-    @media (max-width: 760px) { .steps-grid { grid-template-columns: 1fr; } }
-    .card {
-      background: var(--card); border: 1px solid var(--card-border);
-      border-radius: var(--radius); padding: 22px;
+    .modal-bg.open { display: flex; }
+    .modal {
+      width: 100%; max-width: 520px; background: #111827; border-top: 1px solid var(--border);
+      border-radius: 18px 18px 0 0; padding: 18px 16px 26px;
     }
-    .step-num {
-      width: 30px; height: 30px; border-radius: 8px;
-      background: rgba(56, 189, 248, 0.15); color: var(--accent);
-      display: inline-flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 14px; margin-bottom: 12px;
+    .plan-card {
+      background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px; margin-top: 10px;
     }
-    .card h3 { font-size: 18px; margin-bottom: 8px; }
-    .card p { color: var(--muted); font-size: 14px; }
-
-    .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    @media (max-width: 920px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 560px) { .pricing-grid { grid-template-columns: 1fr; } }
-    .price-card { position: relative; display: flex; flex-direction: column; justify-content: space-between; }
-    .price-card.featured { border-color: var(--accent); box-shadow: 0 0 0 1px rgba(56,189,248,0.25); }
-    .price-amount { font-size: 32px; font-weight: 800; margin: 10px 0 4px; }
-    .price-alt { font-size: 13px; color: var(--accent); margin-bottom: 16px; font-weight: 600; }
-    .price-list { list-style: none; margin-bottom: 20px; }
-    .price-list li { font-size: 14px; color: var(--muted); padding: 5px 0; }
-    .price-list li::before { content: "✓ "; color: var(--green); font-weight: 700; }
-    .price-btn {
-      display: block; text-align: center; padding: 11px 16px; border-radius: 10px;
-      background: #1b2434; color: var(--text); text-decoration: none; font-weight: 700; font-size: 14px;
-    }
-    .price-card.featured .price-btn {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #06101c;
-    }
-    footer { text-align: center; color: var(--muted); font-size: 13px; margin-top: 52px; }
+    .muted { color: var(--muted); font-size: 12px; }
   </style>
 </head>
 <body>
+  <div class="header">
+    <div class="brand"><span class="dot"></span> FragPulse <span style="font-size:11px;color:var(--accent);font-weight:500;">TERMINAL</span></div>
+    <button id="statusPill" class="pill-status" onclick="openPayModal()">FREE • Unlock Pro</button>
+  </div>
+  <div id="snipedTicker" class="ticker">🛰 Syncing Fragment live gift orderbooks...</div>
+
   <div class="container">
-    <header>
-      <div class="brand">
-        <img class="brand-logo" src="logo.jpg" alt="PostForge logo" width="32" height="32" />
-        <div>Post<span>Forge</span></div>
+    <div id="tab-arb" class="tab active">
+      <div class="stats-strip">
+        <div class="stat-box"><div class="stat-lbl">Collections</div><div id="stColls" class="stat-val">--</div></div>
+        <div class="stat-box"><div class="stat-lbl">Open Setups</div><div id="stOpen" class="stat-val" style="color:var(--accent)">--</div></div>
+        <div class="stat-box"><div class="stat-lbl">Sniped Proof</div><div id="stSniped" class="stat-val" style="color:var(--emerald)">--</div></div>
       </div>
-      <button class="lang-btn" id="langToggle" type="button">RU / EN</button>
-    </header>
+      <div id="arbBanner" class="deal-card" style="border-color:rgba(16,185,129,0.3);display:none;">
+        <div style="font-size:13px;font-weight:700;color:#34d399;">🔓 1 Proof Setup Open — A+/A Mint IDs Masked</div>
+        <div class="muted" style="margin-top:4px;">Verify our live orderbook spread on Fragment right now, then unlock all hidden A+/A deals &lt;60s sniper alerts for 69 ⭐ ($1.39).</div>
+        <div class="btn-row"><button class="btn btn-emerald" onclick="openPayModal()">⚡ Unlock 24h Sniper Pass — 69 ⭐</button></div>
+      </div>
+      <div id="dealsList"></div>
+    </div>
 
-    <section class="hero">
-      <div class="badge" data-i18n="badge">No admin rights needed · Card / Apple Pay / Google Pay (Stars) + USDT/TON</div>
-      <h1 data-i18n="headline">Turn voice notes &amp; links into posts in your channel's exact voice</h1>
-      <p class="subtitle" data-i18n="subtitle">
-        No more generic AI fluff. Drop @yourchannel once for a Free AI Channel Audit &amp; 1-click Style DNA cloning — then turn voice memos, articles, X posts, or YouTube videos into publish-ready Telegram posts in 10 seconds.
-      </p>
-      <div class="cta-row">
-        <a class="cta-primary" href="https://t.me/getpostforge_bot?start=landing" target="_blank" rel="noopener" data-i18n="cta">
-          Try 2 Free Posts + Demo →
-        </a>
-        <a class="cta-secondary" href="https://t.me/getpostforge_bot?start=landing_audit" target="_blank" rel="noopener" data-i18n="ctaAudit">
-          📊 Run Free Channel Audit →
-        </a>
-      </div>
-      <div class="cta-note" data-i18n="ctaNote">10-second setup · 0-credit live demo · No card required</div>
-    </section>
-
-    <section class="demo-section">
-      <div class="demo-tabs">
-        <button class="demo-tab active" data-demo="voice" data-i18n="tabVoice">🎙 Voice → Post</button>
-        <button class="demo-tab" data-demo="audit" data-i18n="tabAudit">📊 Free Channel Audit</button>
-        <button class="demo-tab" data-demo="url" data-i18n="tabUrl">🔗 Article / X / YouTube → Brief</button>
-        <button class="demo-tab" data-demo="notes" data-i18n="tabNotes">📝 Rough Notes → Sharp Post</button>
-      </div>
-      <div class="demo-grid">
-        <div class="demo-box">
-          <div class="demo-label" data-i18n="beforeLabel">Input (what you dropped)</div>
-          <div class="demo-content" id="demoBefore"></div>
+    <div id="tab-appraise" class="tab">
+      <div class="deal-card">
+        <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🔍 Gift Trait Appraiser</div>
+        <div class="muted" style="margin-bottom:10px;">Paste <code>t.me/nft/PlushPepe-2014</code> or <code>astralshard-1274</code></div>
+        <div class="input-group">
+          <input id="giftQuery" type="text" placeholder="t.me/nft/PlushPepe-2014" />
+          <button class="btn btn-primary" style="flex:0 0 92px;" onclick="runAppraise()">Appraise</button>
         </div>
-        <div class="demo-box">
-          <div class="demo-label good" data-i18n="afterLabel">PostForge Output (your channel DNA)</div>
-          <div class="demo-content" id="demoAfter"></div>
-        </div>
+        <div id="appraiseResult"></div>
       </div>
-    </section>
 
-    <h2 class="section-title" data-i18n="howTitle">How it works</h2>
-    <div class="steps-grid">
-      <div class="card">
-        <div class="step-num">1</div>
-        <h3 data-i18n="s1Title">Clone &amp; audit by @username</h3>
-        <p data-i18n="s1Desc">Send @yourchannel (no admin rights needed) or forward 2–5 posts. PostForge scores your hooks and learns your Style DNA automatically.</p>
-      </div>
-      <div class="card">
-        <div class="step-num">2</div>
-        <h3 data-i18n="s2Title">Drop a voice note or link</h3>
-        <p data-i18n="s2Desc">Record a 1-min voice memo on a walk, paste an article, X post, or YouTube URL, or forward a post you want to react to.</p>
-      </div>
-      <div class="card">
-        <div class="step-num">3</div>
-        <h3 data-i18n="s3Title">Refine in 1 tap</h3>
-        <p data-i18n="s3Desc">Buttons below every draft: Shorter, Stronger Hook, New Angle, Add Poll, Punchier / RU↔EN, and 5-Post Series.</p>
+      <div class="deal-card">
+        <div style="font-weight:700;font-size:14px;margin-bottom:6px;">💼 TON Wallet Portfolio Scanner</div>
+        <div class="muted" style="margin-bottom:10px;">Enter any <code>.ton</code> domain or wallet address (TonAPI live)</div>
+        <div class="input-group">
+          <input id="walletQuery" type="text" placeholder="foundation.ton or UQ..." />
+          <button class="btn btn-primary" style="flex:0 0 92px;" onclick="runWallet()">Scan</button>
+        </div>
+        <div id="walletResult"></div>
       </div>
     </div>
 
-    <h2 class="section-title" data-i18n="pricingTitle">Simple pricing</h2>
-    <div class="pricing-grid">
-      <div class="card price-card">
-        <div>
-          <h3>Free</h3>
-          <div class="price-amount">$0</div>
-          <div class="price-alt" data-i18n="freeAlt">Test voice cloning &amp; /audit</div>
-          <ul class="price-list">
-            <li data-i18n="f1">2 posts + 0-credit live demo</li>
-            <li data-i18n="f2">Free /audit @channel + 5-post series blueprint</li>
-            <li data-i18n="f3">+5 free posts per friend invite</li>
-          </ul>
-        </div>
-        <a class="price-btn" href="https://t.me/getpostforge_bot?start=landing_free" target="_blank" rel="noopener" data-i18n="startBtn">Launch Bot</a>
+    <div id="tab-colls" class="tab">
+      <div class="input-group">
+        <input id="collSearch" type="text" placeholder="Filter 100+ collections (e.g. Plush Pepe, Snake)..." oninput="renderCollections()" />
       </div>
-
-      <div class="card price-card">
-        <div>
-          <h3>Starter</h3>
-          <div class="price-amount">$0.50 <span data-i18n="perMo" style="font-size:14px;color:var(--muted)">/ mo</span></div>
-          <div class="price-alt" data-i18n="starterAlt">19 ⭐ Stars (Card / Pay) · $0.50 USDT/TON</div>
-          <ul class="price-list">
-            <li data-i18n="st1">15 posts + 5 first-upgrade bonus (20 posts)</li>
-            <li data-i18n="st2">1 cloned channel style</li>
-            <li data-i18n="st3">Impulse pack — $0.50 / 19 ⭐</li>
-          </ul>
-        </div>
-        <a class="price-btn" href="https://t.me/getpostforge_bot?start=landing_starter" target="_blank" rel="noopener" data-i18n="starterBtn">Get Starter</a>
-      </div>
-
-      <div class="card price-card featured">
-        <div>
-          <h3>Pro</h3>
-          <div class="price-amount">$6 <span data-i18n="perMo" style="font-size:14px;color:var(--muted)">/ mo</span></div>
-          <div class="price-alt" data-i18n="proAlt">299 ⭐ Stars (Card / Pay) · $6 USDT/TON</div>
-          <ul class="price-list">
-            <li data-i18n="p1">100 posts / month</li>
-            <li data-i18n="p2">Up to 3 cloned channel styles</li>
-            <li data-i18n="p3">Voice memos, articles, X, YouTube &amp; polls</li>
-          </ul>
-        </div>
-        <a class="price-btn" href="https://t.me/getpostforge_bot?start=landing_pro" target="_blank" rel="noopener" data-i18n="proBtn">Get Pro</a>
-      </div>
-
-      <div class="card price-card">
-        <div>
-          <h3>Agency</h3>
-          <div class="price-amount">$15 <span data-i18n="perMo" style="font-size:14px;color:var(--muted)">/ mo</span></div>
-          <div class="price-alt" data-i18n="agencyAlt">799 ⭐ Stars (Card / Pay) · $15 USDT/TON</div>
-          <ul class="price-list">
-            <li data-i18n="a1">400 posts / month</li>
-            <li data-i18n="a2">Up to 15 cloned styles</li>
-            <li data-i18n="a3">Built for SMM teams &amp; channel networks</li>
-          </ul>
-        </div>
-        <a class="price-btn" href="https://t.me/getpostforge_bot?start=landing_agency" target="_blank" rel="noopener" data-i18n="agencyBtn">Get Agency</a>
-      </div>
+      <div id="collsList"></div>
     </div>
 
-    <footer data-i18n="footerText">PostForge · Built for Telegram channel owners · Card / Apple &amp; Google Pay (Stars ⭐) + USDT/TON</footer>
+    <div id="tab-sniper" class="tab">
+      <div class="deal-card">
+        <div style="font-weight:700;font-size:15px;">🔔 24/7 Telegram Push Sniper</div>
+        <div class="muted" style="margin-top:4px;margin-bottom:12px;">Receive instant bot alerts the second an undervalued Model or Backdrop hits Fragment below your max TON buy budget.</div>
+        <label class="muted">Max Ask Price (TON)</label>
+        <input id="prefMaxTon" type="number" value="50" style="width:100%;margin:4px 0 10px;" />
+        <label class="muted">Minimum Est. ROI (%)</label>
+        <input id="prefMinRoi" type="number" value="20" style="width:100%;margin:4px 0 12px;" />
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="saveAlerts(true)">Save & Enable Sniper</button>
+          <button class="btn btn-ghost" onclick="openPayModal()">Plans (69 ⭐)</button>
+        </div>
+        <div id="alertStatus" class="muted" style="margin-top:10px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="switchTab('arb', this)"><span>🔥</span><span>Live Arb</span></button>
+    <button class="nav-btn" onclick="switchTab('appraise', this)"><span>🔍</span><span>Appraiser</span></button>
+    <button class="nav-btn" onclick="switchTab('colls', this)"><span>📊</span><span>Collections</span></button>
+    <button class="nav-btn" onclick="switchTab('sniper', this)"><span>🔔</span><span>Sniper</span></button>
+  </div>
+
+  <div id="payModal" class="modal-bg" onclick="if(event.target===this) closePayModal()">
+    <div class="modal">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:16px;font-weight:800;">⚡ Unlock FragPulse Pro</div>
+        <button onclick="closePayModal()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;">✕</button>
+      </div>
+      <div class="muted" style="margin-top:4px;">Unblur every live A+/A spread, scan full TON portfolios, and activate &lt;60s sniper alerts.</div>
+      <div id="plansContainer"></div>
+      <div id="payMsg" class="muted" style="margin-top:10px;color:#fbbf24;"></div>
+    </div>
   </div>
 
   <script>
-    const i18n = {
-      ru: {
-        docTitle: "PostForge — AI-редактор и клон стиля Telegram-канала",
-        badge: "Без прав админа · Карта / Apple Pay / Google Pay (Stars) и USDT/TON",
-        headline: "Голосовые и ссылки → готовые посты в стиле твоего Telegram-канала",
-        subtitle: "Забудь про шаблонные тексты «в современном мире». Отправь @канал для бесплатного AI-разбора хуков и клонирования стиля — и превращай голосовые, статьи, посты из X или YouTube в посты за 10 секунд.",
-        cta: "2 поста + демо бесплатно →",
-        ctaAudit: "📊 Бесплатный AI-разбор @канала →",
-        ctaNote: "Старт за 10 секунд · Демо не тратит кредиты · Карта не нужна",
-        tabVoice: "🎙 Голосовое → Пост",
-        tabAudit: "📊 AI-разбор @канала",
-        tabUrl: "🔗 Статья / X / YouTube → Выжимка",
-        tabNotes: "📝 Сырые тезисы → Острый пост",
-        beforeLabel: "Вход (что кинул автор)",
-        afterLabel: "Выход PostForge (в стиле канала)",
-        howTitle: "Как это работает",
-        s1Title: "Клон стиля и аудит по @username",
-        s1Desc: "Пришли @канал (без прав админа) или 2–5 постов. Бот оценит хуки в /audit и снимет твою ДНК стиля.",
-        s2Title: "Кидаешь голосовое или ссылку",
-        s2Desc: "Наговариваешь мысль на ходу, кидаешь статью, пост из X, YouTube-ролик или тезисы — получаешь чистый Telegram HTML.",
-        s3Title: "Докручиваешь в 1 клик",
-        s3Desc: "Кнопки под постом: «Короче», «Острее хук», «Другой угол», «Опрос», «Перевод RU↔EN» и «Серия из 5 постов».",
-        pricingTitle: "Простые тарифы",
-        perMo: "/ мес",
-        freeAlt: "Проверить качество и /audit",
-        f1: "2 поста + бесплатное живое демо",
-        f2: "Бесплатный /audit @канала + план серии из 5 постов",
-        f3: "+5 постов за каждого друга",
-        starterAlt: "19 ⭐ Stars (Карта / Pay) · $0.50 USDT/TON",
-        st1: "15 постов + 5 бонус за 1-ю оплату (20 постов)",
-        st2: "1 клонированный стиль канала",
-        st3: "Импульсный пакет — 19 ⭐ (~38 ₽ / $0.50)",
-        proAlt: "299 ⭐ Stars (Карта / Pay) · $6 USDT/TON",
-        p1: "100 постов в месяц",
-        p2: "До 3 клонированных стилей",
-        p3: "Голосовые, статьи, X, YouTube, опросы",
-        agencyAlt: "799 ⭐ Stars (Карта / Pay) · $15 USDT/TON",
-        a1: "400 постов в месяц",
-        a2: "До 15 стилей под сетку каналов",
-        a3: "Идеально для SMM и редакций",
-        startBtn: "Запустить бота",
-        starterBtn: "Выбрать Starter",
-        proBtn: "Выбрать Pro",
-        agencyBtn: "Выбрать Agency",
-        footerText: "PostForge · Для владельцев Telegram-каналов · Карта / Apple & Google Pay (Stars ⭐) + USDT/TON"
-      },
-      en: {
-        docTitle: "PostForge — AI Telegram Channel Post Editor & Voice Cloner",
-        badge: "No admin rights needed · Card / Apple Pay / Google Pay (Stars) + USDT/TON",
-        headline: "Turn voice notes & links into posts in your channel's exact voice",
-        subtitle: "No more generic AI fluff. Drop @yourchannel once for a Free AI Channel Audit & 1-click Style DNA cloning — then turn voice memos, articles, X posts, or YouTube videos into publish-ready Telegram posts in 10 seconds.",
-        cta: "Try 2 Free Posts + Demo →",
-        ctaAudit: "📊 Run Free Channel Audit →",
-        ctaNote: "10-second setup · 0-credit live demo · No card required",
-        tabVoice: "🎙 Voice → Post",
-        tabAudit: "📊 Free Channel Audit",
-        tabUrl: "🔗 Article / X / YouTube → Brief",
-        tabNotes: "📝 Rough Notes → Sharp Post",
-        beforeLabel: "Input (what you dropped)",
-        afterLabel: "PostForge Output (your channel DNA)",
-        howTitle: "How it works",
-        s1Title: "Clone & audit by @username",
-        s1Desc: "Send @yourchannel (no admin rights needed) or forward 2–5 posts. PostForge scores your hooks and learns your Style DNA automatically.",
-        s2Title: "Drop a voice note or link",
-        s2Desc: "Record a 1-min voice memo on a walk, paste an article, X post, or YouTube URL, or forward a post you want to react to.",
-        s3Title: "Refine in 1 tap",
-        s3Desc: "Buttons below every draft: Shorter, Stronger Hook, New Angle, Add Poll, Punchier / RU↔EN, and 5-Post Series.",
-        pricingTitle: "Simple pricing",
-        perMo: "/ mo",
-        freeAlt: "Test voice cloning & /audit",
-        f1: "2 posts + 0-credit live demo",
-        f2: "Free /audit @channel + 5-post series blueprint",
-        f3: "+5 free posts per friend invite",
-        starterAlt: "19 ⭐ Stars (Card / Pay) · $0.50 USDT/TON",
-        st1: "15 posts + 5 first-upgrade bonus (20 posts)",
-        st2: "1 cloned channel style",
-        st3: "Impulse pack — $0.50 / 19 ⭐",
-        proAlt: "299 ⭐ Stars (Card / Pay) · $6 USDT/TON",
-        p1: "100 posts / month",
-        p2: "Up to 3 cloned channel styles",
-        p3: "Voice memos, articles, X, YouTube & polls",
-        agencyAlt: "799 ⭐ Stars (Card / Pay) · $15 USDT/TON",
-        a1: "400 posts / month",
-        a2: "Up to 15 cloned styles",
-        a3: "Built for SMM teams & channel networks",
-        startBtn: "Launch Bot",
-        starterBtn: "Get Starter",
-        proBtn: "Get Pro",
-        agencyBtn: "Get Agency",
-        footerText: "PostForge · Built for Telegram channel owners · Card / Apple & Google Pay (Stars ⭐) + USDT/TON"
-      }
-    };
+    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+    if (tg) { tg.ready(); tg.expand(); }
+    const API_BASE = window.location.hostname.includes("github.io") ? "https://45-61-144-243.sslip.io" : "";
+    const INIT_DATA = tg ? (tg.initData || "") : "";
+    let STATE = { is_pro: false, deals: [], sniped: [], collections: [], plans: [] };
 
-    const demos = {
-      ru: {
-        voice: {
-          before: "🎙 Голосовое (0:42):\n«Короче, сегодня общался с клиентом, он слил $1200 на рекламу у блогеров, потому что не проверял отписки через инвайт-ссылки. Просто кидал общую ссылку на канал. Надо объяснить людям, что без трекинга ссылок реклама — это лотерея.»",
-          after: "<b>Почему $1200 на рекламу в Telegram сгорают в первую неделю</b>\n\nСегодня разбирали кейс клиента: купил 4 посева, подписчики вроде пришли, а охваты не выросли.\n\nОшибка банальная — всех вели на публичный @username. Через неделю 70% отписались, но кто именно привёл мусорный трафик — понять невозможно.\n\n<blockquote>Правило простое: 1 размещение = 1 уникальная инвайт-ссылка.</blockquote>\n\nНе видите отток по каждому каналу на 7-й день — значит не покупаете рекламу, а играете в рулетку."
-        },
-        audit: {
-          before: "Команда в боте:\n/audit @yourchannel\n\n(Бот сам читает последние публичные посты канала — права админа не нужны)",
-          after: "<b>📊 AI-разбор канала @yourchannel</b>\n\n• <b>Архетип голоса:</b> Практик-редактор\n• <b>Оценка хуков:</b> 7.4/10 · <b>Читаемость:</b> 8.8/10\n• <b>Сильная сторона:</b> живые кейсы из практики.\n• <b>Точка роста:</b> первые 2 строки перегружены вступлением — вывод спрятан в конец.\n\n<b>Усиленный хук для вашего поста:</b>\n<blockquote>Я проверил 12 запусков в Telegram — 9 слили бюджет из-за одной настройки в /plan.</blockquote>"
-        },
-        url: {
-          before: "🔗 https://example.com/telegram-stars-guide\n(Длинная англоязычная статья на 2500 слов про вывод Telegram Stars через Fragment без обязательного KYC от 1000 Stars и холд 21 день.)",
-          after: "<b>Коротко: как сейчас выводить Telegram Stars в TON</b>\n\nВытащил главные цифры из нового гайда, чтобы не читать 2500 слов:\n\n• <b>Порог вывода:</b> от 1 000 Stars на балансе бота или канала.\n• <b>Холд 21 день:</b> защита от возвратов в App Store и Google Play.\n• <b>Выплата:</b> через Fragment напрямую на TON-кошелёк владельца.\n\nДля микро-сервисов внутри Telegram это сейчас самый быстрый вход: юзер платит в 2 клика без карт."
-        },
-        notes: {
-          before: "📝 Заметка:\n«все промптят chatgpt но тексты палятся с первого слова. люди отписываются когда видят воду. решение — скармливать свои старые посты и запрещать штампы»",
-          after: "<b>Читатели чуют ChatGPT со второй строчки — и молча отписываются</b>\n\nКогда канал внезапно начинает писать фразами вроде «в современном мире важно отметить», доверие падает до нуля.\n\nНейросеть не умеет в ваш характер, пока не увидит 3–5 ваших реальных текстов и жёсткий список запрещённых штампов.\n\nСначала скармливайте стиль — потом просите пост. Обратный порядок убивает охваты."
-        }
-      },
-      en: {
-        voice: {
-          before: "🎙 Voice memo (0:42):\n'Just talked to a founder who burned $1,200 on Telegram channel promos because he used his public @username instead of unique invite links. Zero clue which channel brought bots vs real buyers.'",
-          after: "<b>How $1,200 in Telegram ads vanishes in 7 days</b>\n\nAudited a founder's promo campaign today: 4 sponsored posts, decent join spike, flat sales.\n\nThe mistake? Every promo pointed to their public @username. Half the crowd unsubscribed by Day 7 — with zero way to tell which channel sent junk traffic.\n\n<blockquote>One rule fixes this: 1 placement = 1 tracked invite link.</blockquote>\n\nIf you can't measure Day-7 retention per source, you're guessing, not buying traffic."
-        },
-        audit: {
-          before: "Command in bot:\n/audit @yourchannel\n\n(Reads recent public posts automatically — zero admin rights needed)",
-          after: "<b>📊 Channel Audit: @yourchannel</b>\n\n• <b>Voice Archetype:</b> Sharp Practitioner\n• <b>Hook Score:</b> 7.4/10 · <b>Readability:</b> 8.8/10\n• <b>What Works:</b> Real operational examples.\n• <b>Growth Leak:</b> Opening lines bury the sharpest number at the bottom.\n\n<b>Rewritten Scroll-Stopping Hook:</b>\n<blockquote>I audited 12 Telegram launches this month — 9 burned budget on the same mistake.</blockquote>"
-        },
-        url: {
-          before: "🔗 https://example.com/telegram-stars-guide\n(2,500-word article covering Telegram Stars payouts on Fragment, 1,000 Stars minimum, 21-day hold window, and TON payouts.)",
-          after: "<b>TL;DR: Telegram Stars cashouts in 3 bullets</b>\n\nDistilled the 2,500-word payout doc into what actually matters:\n\n• <b>Minimum:</b> 1,000 Stars balance required.\n• <b>21-day hold:</b> covers Apple/Google in-app refund windows.\n• <b>Settlement:</b> paid in TON via Fragment to the bot/channel owner.\n\nLowest-friction mobile checkout inside Telegram — zero external Stripe redirects."
-        },
-        notes: {
-          before: "📝 Raw notes:\n'everyone uses chatgpt and sounds identical. readers mute robotic fluff. feed your own best posts first and ban cliches'",
-          after: "<b>Readers spot generic ChatGPT copy in two seconds — and hit mute</b>\n\nThe moment your channel starts sounding like 'In today's fast-paced digital landscape,' engagement drops.\n\nAn AI editor only works when it copies your sentence cadence and bans corporate filler.\n\nFeed your Style DNA first. Generate second."
-        }
-      }
-    };
-
-    const params = new URLSearchParams(window.location.search);
-    const paramLang = (params.get("lang") || "").toLowerCase();
-    const browserLang = (navigator.language || "").toLowerCase();
-    let currentLang =
-      paramLang === "ru" || paramLang === "en"
-        ? paramLang
-        : /^(ru|uk|be|kk)\b/.test(browserLang)
-          ? "ru"
-          : "en";
-    let currentDemo = "voice";
-
-    const rawSrc = (params.get("src") || params.get("utm_source") || "").toLowerCase();
-    const cleanSrc = rawSrc.replace(/[^a-z0-9_-]/g, "").slice(0, 32);
-    if (cleanSrc) {
-      document.querySelectorAll('a[href^="https://t.me/getpostforge_bot"]').forEach(link => {
-        if (!link.href.includes("start=landing_audit")) {
-          link.href = "https://t.me/getpostforge_bot?start=web_" + cleanSrc;
-        }
-      });
+    function esc(s) {
+      return String(s || "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     }
 
-    function render() {
-      document.documentElement.lang = currentLang;
-      document.title = i18n[currentLang].docTitle;
-      document.querySelectorAll("[data-i18n]").forEach(el => {
-        const key = el.getAttribute("data-i18n");
-        if (i18n[currentLang][key]) el.textContent = i18n[currentLang][key];
-      });
-      const sample = demos[currentLang][currentDemo];
-      document.getElementById("demoBefore").textContent = sample.before;
-      document.getElementById("demoAfter").innerHTML = sample.after;
+    function switchTab(id, el) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById("tab-" + id).classList.add("active");
+      el.classList.add("active");
     }
 
-    document.getElementById("langToggle").addEventListener("click", () => {
-      currentLang = currentLang === "ru" ? "en" : "ru";
-      render();
-    });
+    function openPayModal() { document.getElementById("payModal").classList.add("open"); }
+    function closePayModal() { document.getElementById("payModal").classList.remove("open"); }
 
-    document.querySelectorAll(".demo-tab").forEach(btn => {
-      btn.addEventListener("click", () => {
-        document.querySelectorAll(".demo-tab").forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        currentDemo = btn.getAttribute("data-demo");
-        render();
+    async function loadBootstrap() {
+      try {
+        const r = await fetch(API_BASE + "/api/bootstrap", {
+          method: "POST", headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({ init_data: INIT_DATA })
+        });
+        STATE = await r.json();
+        renderAll();
+      } catch (e) {
+        document.getElementById("snipedTicker").textContent = "⚠️ Connecting to FragPulse node...";
+      }
+    }
+
+    function renderAll() {
+      document.getElementById("stColls").textContent = STATE.collections.length || "100+";
+      document.getElementById("stOpen").textContent = STATE.deals.length;
+      document.getElementById("stSniped").textContent = STATE.sniped.length;
+
+      const pill = document.getElementById("statusPill");
+      if (STATE.is_pro) {
+        pill.textContent = "PRO ACTIVE";
+        pill.classList.add("pro");
+        document.getElementById("arbBanner").style.display = "none";
+      } else {
+        pill.textContent = "FREE • Unlock Pro";
+        pill.classList.remove("pro");
+        document.getElementById("arbBanner").style.display = STATE.deals.some(d => d.locked) ? "block" : "none";
+      }
+
+      if (STATE.sniped.length) {
+        const s0 = STATE.sniped[0];
+        document.getElementById("snipedTicker").innerHTML =
+          `✅ <b>Recently Sniped:</b> ${esc(s0.coll_name)} #${esc(s0.mint_num)} (${esc(s0.trait_label)}) • Ask ${s0.ask_ton} TON → Next ${s0.ref_floor_ton} TON (+${s0.net_profit_ton} TON)`;
+      } else {
+        document.getElementById("snipedTicker").textContent = `🛰 Indexing ${STATE.collections.length || "100+"} Fragment gift collections in real time`;
+      }
+
+      const dList = document.getElementById("dealsList");
+      if (!STATE.deals.length) {
+        dList.innerHTML = `<div class="deal-card muted">🛰 Scanning Fragment trait orderbooks... Check back in 15 seconds.</div>`;
+      } else {
+        dList.innerHTML = STATE.deals.map(d => {
+          const gCls = d.grade === "A+" ? "grade-Ap" : (d.grade === "A" ? "grade-A" : "grade-B");
+          const mintBadge = d.locked ? "🔒 #████" : `#${esc(d.mint_num)}`;
+          const img = esc(d.item_image_url || d.coll_thumb_url || "");
+          const actionBtn = d.locked
+            ? `<button class="btn btn-emerald" onclick="openPayModal()">🔓 Unblur Mint ID & URL — 69 ⭐</button>`
+            : `<a class="btn btn-primary" href="${esc(d.buy_url)}" target="_blank">⚡ Buy / Inspect on Fragment</a>`;
+          return `
+            <div class="deal-card">
+              <div class="deal-top">
+                <img class="thumb ${d.locked ? "blurred" : ""}" src="${img}" alt="" />
+                <div class="deal-meta">
+                  <div class="deal-title"><span class="grade ${gCls}">${esc(d.grade)}</span> ${esc(d.coll_name)} <span style="color:var(--accent)">${mintBadge}</span></div>
+                  <div class="trait-sub">${esc(d.trait_label)} • ${d.trait_depth} listed</div>
+                </div>
+                <div class="profit-pill">+${d.net_profit_ton} TON<div class="profit-sub">+${d.roi_pct}% ROI</div></div>
+              </div>
+              <div class="orderbook">
+                <div class="ob-cell"><div class="ob-k">Ask #1</div><div class="ob-v">${d.ask_ton} TON</div></div>
+                <div class="ob-cell"><div class="ob-k">Next Floor #2</div><div class="ob-v">${d.ref_floor_ton} TON</div></div>
+                <div class="ob-cell"><div class="ob-k">Wall #3</div><div class="ob-v">${d.wall_3_ton} TON</div></div>
+              </div>
+              <div class="btn-row">${actionBtn}</div>
+            </div>`;
+        }).join("");
+      }
+
+      renderCollections();
+
+      document.getElementById("plansContainer").innerHTML = (STATE.plans || []).map(p => `
+        <div class="plan-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>${esc(p.title)}</b>
+            <span style="color:#fbbf24;font-family:var(--mono);font-weight:700;">${p.stars} ⭐ / $${esc(p.usd)}</span>
+          </div>
+          <div class="muted" style="margin:4px 0 8px;">${esc(p.desc)}</div>
+          <div class="btn-row" style="margin-top:0;">
+            <button class="btn btn-emerald" onclick="payStars('${esc(p.code)}')">⭐ Pay ${p.stars} Stars</button>
+            <button class="btn btn-ghost" onclick="payCrypto('${esc(p.code)}')">💎 $${esc(p.usd)} TON/USDT</button>
+          </div>
+        </div>`).join("");
+
+      if (STATE.alert_prefs) {
+        document.getElementById("prefMaxTon").value = STATE.alert_prefs.max_ton;
+        document.getElementById("prefMinRoi").value = STATE.alert_prefs.min_roi;
+      }
+    }
+
+    function renderCollections() {
+      const q = (document.getElementById("collSearch").value || "").trim().toLowerCase();
+      const rows = (STATE.collections || []).filter(c => !q || c.name.toLowerCase().includes(q) || c.slug.includes(q));
+      document.getElementById("collsList").innerHTML = rows.slice(0, 60).map(c => `
+        <div class="coll-row">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <img class="thumb" style="width:36px;height:36px;border-radius:8px;" src="${esc(c.thumb_url)}" />
+            <div><div style="font-weight:600;font-size:13px;">${esc(c.name)}</div><div class="muted">${c.listed_count} items</div></div>
+          </div>
+          <div style="font-family:var(--mono);font-weight:700;color:var(--accent);">${c.floor_ton > 0 ? c.floor_ton + " TON" : "scanning"}</div>
+        </div>`).join("");
+    }
+
+    async function runAppraise() {
+      const q = document.getElementById("giftQuery").value.trim();
+      const box = document.getElementById("appraiseResult");
+      if (!q) return;
+      box.innerHTML = `<div class="muted">🛰 Pulling live Fragment trait orderbook...</div>`;
+      const r = await fetch(API_BASE + "/api/appraise", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, query: q })
       });
-    });
+      const d = await r.json();
+      if (!r.ok) { box.innerHTML = `<div style="color:var(--rose);font-size:13px;">${esc(d.detail || "Error")}</div>`; if (r.status === 402) openPayModal(); return; }
+      box.innerHTML = `
+        <div style="margin-top:10px;border-top:1px solid rgba(148,163,184,0.15);padding-top:10px;">
+          <div style="display:flex;gap:10px;align-items:center;">
+            <img class="thumb" src="${esc(d.image_url)}" />
+            <div><div style="font-weight:700;">${esc(d.title)}</div><div style="color:var(--emerald);font-family:var(--mono);font-weight:700;">Fair Value: ${d.fair_ton} TON (Net ~${d.net_liquidation_ton} TON)</div></div>
+          </div>
+          <div class="orderbook">
+            <div class="ob-cell"><div class="ob-k">Coll Floor</div><div class="ob-v">${d.coll_floor_ton} TON</div></div>
+            <div class="ob-cell"><div class="ob-k">Model (${d.model_rarity}%)</div><div class="ob-v">${d.model_floor_ton} TON</div></div>
+            <div class="ob-cell"><div class="ob-k">Backdrop (${d.backdrop_rarity}%)</div><div class="ob-v">${d.backdrop_floor_ton} TON</div></div>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="${esc(d.buy_url)}" target="_blank">Open Fragment</a>
+            <a class="btn btn-ghost" href="https://t.me/share/url?url=https://t.me/pingscout_ai_bot&text=${encodeURIComponent(d.title + ' Fair Valuation: ' + d.fair_ton + ' TON via FragPulse')}" target="_blank">Share Result</a>
+          </div>
+        </div>`;
+    }
 
-    render();
+    async function runWallet() {
+      const w = document.getElementById("walletQuery").value.trim();
+      const box = document.getElementById("walletResult");
+      if (!w) return;
+      box.innerHTML = `<div class="muted">🛰 Scanning TON NFTs via TonAPI...</div>`;
+      const r = await fetch(API_BASE + "/api/wallet", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, wallet: w })
+      });
+      const d = await r.json();
+      if (!r.ok) { box.innerHTML = `<div style="color:var(--rose);font-size:13px;">${esc(d.detail || "Error")}</div>`; if (r.status === 402) openPayModal(); return; }
+      box.innerHTML = `
+        <div style="margin-top:8px;font-weight:700;color:var(--emerald);font-family:var(--mono);">Gifts: ${d.gift_count} • Portfolio Floor: ${d.total_floor_ton} TON (Net ~${d.net_liquidation_ton})</div>
+        ${(d.items || []).slice(0, 12).map(it => `<div class="muted" style="margin-top:4px;">• <b>${esc(it.coll_name)} #${it.mint_num}</b> — ${it.floor_ton} TON ${it.backdrop ? "(" + esc(it.backdrop) + ")" : ""}</div>`).join("")}`;
+    }
+
+    async function saveAlerts(enabled) {
+      const max_ton = parseFloat(document.getElementById("prefMaxTon").value || "50");
+      const min_roi = parseFloat(document.getElementById("prefMinRoi").value || "20");
+      const r = await fetch(API_BASE + "/api/alerts", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, enabled, max_ton, min_roi })
+      });
+      const d = await r.json();
+      if (!r.ok) { document.getElementById("alertStatus").textContent = d.detail; return; }
+      document.getElementById("alertStatus").textContent = d.is_pro ? "✅ Sniper preferences saved & active!" : "⚠️ Preferences saved! Activate 24h Pass (69 ⭐) to turn on push alerts.";
+      if (!d.is_pro) openPayModal();
+    }
+
+    async function payStars(plan_code) {
+      const msg = document.getElementById("payMsg");
+      msg.textContent = "Creating Telegram Stars invoice...";
+      const r = await fetch(API_BASE + "/api/invoice/stars", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, plan_code })
+      });
+      const d = await r.json();
+      if (!r.ok) { msg.textContent = d.detail || "Open inside @pingscout_ai_bot to pay with Stars."; return; }
+      if (tg && tg.openInvoice) {
+        tg.openInvoice(d.invoice_url, status => {
+          if (status === "paid") { closePayModal(); setTimeout(loadBootstrap, 800); }
+          else { msg.textContent = "Invoice status: " + status; }
+        });
+      } else {
+        window.open(d.invoice_url, "_blank");
+      }
+    }
+
+    async function payCrypto(plan_code) {
+      const msg = document.getElementById("payMsg");
+      msg.textContent = "Creating @CryptoBot invoice...";
+      const r = await fetch(API_BASE + "/api/invoice/crypto", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, plan_code })
+      });
+      const d = await r.json();
+      if (!r.ok) { msg.textContent = d.detail || "Error"; return; }
+      if (tg && tg.openTelegramLink) tg.openTelegramLink(d.pay_url);
+      else window.open(d.pay_url, "_blank");
+    }
+
+    loadBootstrap();
   </script>
 </body>
 </html>
