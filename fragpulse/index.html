@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>FragPulse — Gift & TON Arbitrage Terminal</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card: rgba(17, 24, 39, 0.85);
+      --border: rgba(56, 189, 248, 0.16);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --accent: #38bdf8;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: radial-gradient(circle at top right, #0f1c34 0%, var(--bg) 52%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+      min-height: 100vh;
+      padding-bottom: 84px;
+    }
+    .header {
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(11, 15, 25, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 14px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 16px; letter-spacing: -0.02em; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 10px var(--emerald); }
+    .pill-status {
+      font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+      background: rgba(56, 189, 248, 0.14); color: var(--accent); border: 1px solid rgba(56, 189, 248, 0.3);
+      cursor: pointer;
+    }
+    .pill-status.pro { background: rgba(16, 185, 129, 0.16); color: var(--emerald); border-color: rgba(16, 185, 129, 0.35); }
+    .ticker {
+      background: rgba(16, 185, 129, 0.08);
+      border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+      padding: 7px 14px;
+      font-size: 12px; color: #cbd5e1;
+      white-space: nowrap; overflow-x: auto;
+    }
+    .container { max-width: 720px; margin: 0 auto; padding: 12px; }
+    .stats-strip {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px;
+    }
+    .stat-box {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px;
+    }
+    .stat-lbl { font-size: 10px; text-transform: uppercase; color: var(--muted); letter-spacing: 0.04em; }
+    .stat-val { font-family: var(--mono); font-size: 15px; font-weight: 700; margin-top: 2px; color: var(--text); }
+    .deal-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 12px; margin-bottom: 10px; position: relative; overflow: hidden;
+    }
+    .deal-top { display: flex; gap: 10px; align-items: center; }
+    .thumb {
+      width: 48px; height: 48px; border-radius: 12px; object-fit: cover;
+      background: #1e293b; border: 1px solid rgba(255,255,255,0.08);
+    }
+    .thumb.blurred { filter: blur(4px) brightness(0.75); }
+    .deal-meta { flex: 1; min-width: 0; }
+    .deal-title { font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+    .grade { font-family: var(--mono); font-size: 11px; font-weight: 800; padding: 2px 6px; border-radius: 6px; }
+    .grade-Ap { background: rgba(16, 185, 129, 0.22); color: #34d399; }
+    .grade-A { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; }
+    .grade-B { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .trait-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .profit-pill {
+      font-family: var(--mono); text-align: right; font-weight: 700; font-size: 13px; color: var(--emerald);
+    }
+    .profit-sub { font-size: 11px; color: #6ee7b7; }
+    .orderbook {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+      margin-top: 10px; padding-top: 9px; border-top: 1px solid rgba(148,163,184,0.12);
+      font-family: var(--mono); font-size: 11px;
+    }
+    .ob-cell { background: rgba(15, 23, 42, 0.7); padding: 6px 8px; border-radius: 8px; }
+    .ob-k { color: var(--muted); font-size: 10px; }
+    .ob-v { color: var(--text); font-weight: 700; margin-top: 2px; }
+    .btn-row { display: flex; gap: 8px; margin-top: 10px; }
+    .btn {
+      flex: 1; border: none; border-radius: 10px; padding: 10px 12px; font-weight: 600; font-size: 13px;
+      cursor: pointer; text-align: center; text-decoration: none; display: inline-block;
+    }
+    .btn-primary { background: linear-gradient(135deg, #0284c7, #0ea5e9); color: #fff; }
+    .btn-emerald { background: linear-gradient(135deg, #059669, #10b981); color: #052e16; font-weight: 700; }
+    .btn-ghost { background: rgba(148,163,184,0.12); color: var(--text); border: 1px solid rgba(148,163,184,0.2); }
+    .input-group { display: flex; gap: 8px; margin-bottom: 10px; }
+    input[type="text"], input[type="number"] {
+      flex: 1; background: rgba(15, 23, 42, 0.9); border: 1px solid var(--border); border-radius: 10px;
+      color: var(--text); padding: 10px 12px; font-size: 14px; outline: none;
+    }
+    input:focus { border-color: var(--accent); }
+    .coll-row {
+      display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-bottom: 8px;
+    }
+    .nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+      background: rgba(11, 15, 25, 0.96); backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(4, 1fr); padding: 6px 4px 12px;
+    }
+    .nav-btn {
+      background: none; border: none; color: var(--muted); font-size: 11px; font-weight: 600;
+      display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; padding: 4px;
+    }
+    .nav-btn.active { color: var(--accent); }
+    .tab { display: none; }
+    .tab.active { display: block; }
+    .modal-bg {
+      position: fixed; inset: 0; background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(6px);
+      z-index: 50; display: none; align-items: flex-end; justify-content: center;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      width: 100%; max-width: 520px; background: #111827; border-top: 1px solid var(--border);
+      border-radius: 18px 18px 0 0; padding: 18px 16px 26px;
+    }
+    .plan-card {
+      background: rgba(15, 23, 42, 0.8); border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px; margin-top: 10px;
+    }
+    .muted { color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand"><span class="dot"></span> FragPulse <span style="font-size:11px;color:var(--accent);font-weight:500;">TERMINAL</span></div>
+    <button id="statusPill" class="pill-status" onclick="openPayModal()">FREE • Unlock Pro</button>
+  </div>
+  <div id="snipedTicker" class="ticker">🛰 Syncing Fragment live gift orderbooks...</div>
+
+  <div class="container">
+    <div id="tab-arb" class="tab active">
+      <div class="stats-strip">
+        <div class="stat-box"><div class="stat-lbl">Collections</div><div id="stColls" class="stat-val">--</div></div>
+        <div class="stat-box"><div class="stat-lbl">Open Setups</div><div id="stOpen" class="stat-val" style="color:var(--accent)">--</div></div>
+        <div class="stat-box"><div class="stat-lbl">Sniped Proof</div><div id="stSniped" class="stat-val" style="color:var(--emerald)">--</div></div>
+      </div>
+      <div id="arbBanner" class="deal-card" style="border-color:rgba(16,185,129,0.3);display:none;">
+        <div style="font-size:13px;font-weight:700;color:#34d399;">🔓 1 Proof Setup Open — A+/A Mint IDs Masked</div>
+        <div class="muted" style="margin-top:4px;">Verify our live orderbook spread on Fragment right now, then unlock all hidden A+/A deals &lt;60s sniper alerts for 69 ⭐ ($1.39).</div>
+        <div class="btn-row"><button class="btn btn-emerald" onclick="openPayModal()">⚡ Unlock 24h Sniper Pass — 69 ⭐</button></div>
+      </div>
+      <div id="dealsList"></div>
+    </div>
+
+    <div id="tab-appraise" class="tab">
+      <div class="deal-card">
+        <div style="font-weight:700;font-size:14px;margin-bottom:6px;">🔍 Gift Trait Appraiser</div>
+        <div class="muted" style="margin-bottom:10px;">Paste <code>t.me/nft/PlushPepe-2014</code> or <code>astralshard-1274</code></div>
+        <div class="input-group">
+          <input id="giftQuery" type="text" placeholder="t.me/nft/PlushPepe-2014" />
+          <button class="btn btn-primary" style="flex:0 0 92px;" onclick="runAppraise()">Appraise</button>
+        </div>
+        <div id="appraiseResult"></div>
+      </div>
+
+      <div class="deal-card">
+        <div style="font-weight:700;font-size:14px;margin-bottom:6px;">💼 TON Wallet Portfolio Scanner</div>
+        <div class="muted" style="margin-bottom:10px;">Enter any <code>.ton</code> domain or wallet address (TonAPI live)</div>
+        <div class="input-group">
+          <input id="walletQuery" type="text" placeholder="foundation.ton or UQ..." />
+          <button class="btn btn-primary" style="flex:0 0 92px;" onclick="runWallet()">Scan</button>
+        </div>
+        <div id="walletResult"></div>
+      </div>
+    </div>
+
+    <div id="tab-colls" class="tab">
+      <div class="input-group">
+        <input id="collSearch" type="text" placeholder="Filter 100+ collections (e.g. Plush Pepe, Snake)..." oninput="renderCollections()" />
+      </div>
+      <div id="collsList"></div>
+    </div>
+
+    <div id="tab-sniper" class="tab">
+      <div class="deal-card">
+        <div style="font-weight:700;font-size:15px;">🔔 24/7 Telegram Push Sniper</div>
+        <div class="muted" style="margin-top:4px;margin-bottom:12px;">Receive instant bot alerts the second an undervalued Model or Backdrop hits Fragment below your max TON buy budget.</div>
+        <label class="muted">Max Ask Price (TON)</label>
+        <input id="prefMaxTon" type="number" value="50" style="width:100%;margin:4px 0 10px;" />
+        <label class="muted">Minimum Est. ROI (%)</label>
+        <input id="prefMinRoi" type="number" value="20" style="width:100%;margin:4px 0 12px;" />
+        <div class="btn-row">
+          <button class="btn btn-primary" onclick="saveAlerts(true)">Save & Enable Sniper</button>
+          <button class="btn btn-ghost" onclick="openPayModal()">Plans (69 ⭐)</button>
+        </div>
+        <div id="alertStatus" class="muted" style="margin-top:10px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="switchTab('arb', this)"><span>🔥</span><span>Live Arb</span></button>
+    <button class="nav-btn" onclick="switchTab('appraise', this)"><span>🔍</span><span>Appraiser</span></button>
+    <button class="nav-btn" onclick="switchTab('colls', this)"><span>📊</span><span>Collections</span></button>
+    <button class="nav-btn" onclick="switchTab('sniper', this)"><span>🔔</span><span>Sniper</span></button>
+  </div>
+
+  <div id="payModal" class="modal-bg" onclick="if(event.target===this) closePayModal()">
+    <div class="modal">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:16px;font-weight:800;">⚡ Unlock FragPulse Pro</div>
+        <button onclick="closePayModal()" style="background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;">✕</button>
+      </div>
+      <div class="muted" style="margin-top:4px;">Unblur every live A+/A spread, scan full TON portfolios, and activate &lt;60s sniper alerts.</div>
+      <div id="plansContainer"></div>
+      <div id="payMsg" class="muted" style="margin-top:10px;color:#fbbf24;"></div>
+    </div>
+  </div>
+
+  <script>
+    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+    if (tg) { tg.ready(); tg.expand(); }
+    const API_BASE = window.location.hostname.includes("github.io") ? "https://45-61-144-243.sslip.io" : "";
+    const INIT_DATA = tg ? (tg.initData || "") : "";
+    let STATE = { is_pro: false, deals: [], sniped: [], collections: [], plans: [] };
+
+    function esc(s) {
+      return String(s || "").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function switchTab(id, el) {
+      document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+      document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+      document.getElementById("tab-" + id).classList.add("active");
+      el.classList.add("active");
+    }
+
+    function openPayModal() { document.getElementById("payModal").classList.add("open"); }
+    function closePayModal() { document.getElementById("payModal").classList.remove("open"); }
+
+    async function loadBootstrap() {
+      try {
+        const r = await fetch(API_BASE + "/api/bootstrap", {
+          method: "POST", headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({ init_data: INIT_DATA })
+        });
+        STATE = await r.json();
+        renderAll();
+      } catch (e) {
+        document.getElementById("snipedTicker").textContent = "⚠️ Connecting to FragPulse node...";
+      }
+    }
+
+    function renderAll() {
+      document.getElementById("stColls").textContent = STATE.collections.length || "100+";
+      document.getElementById("stOpen").textContent = STATE.deals.length;
+      document.getElementById("stSniped").textContent = STATE.sniped.length;
+
+      const pill = document.getElementById("statusPill");
+      if (STATE.is_pro) {
+        pill.textContent = "PRO ACTIVE";
+        pill.classList.add("pro");
+        document.getElementById("arbBanner").style.display = "none";
+      } else {
+        pill.textContent = "FREE • Unlock Pro";
+        pill.classList.remove("pro");
+        document.getElementById("arbBanner").style.display = STATE.deals.some(d => d.locked) ? "block" : "none";
+      }
+
+      if (STATE.sniped.length) {
+        const s0 = STATE.sniped[0];
+        document.getElementById("snipedTicker").innerHTML =
+          `✅ <b>Recently Sniped:</b> ${esc(s0.coll_name)} #${esc(s0.mint_num)} (${esc(s0.trait_label)}) • Ask ${s0.ask_ton} TON → Next ${s0.ref_floor_ton} TON (+${s0.net_profit_ton} TON)`;
+      } else {
+        document.getElementById("snipedTicker").textContent = `🛰 Indexing ${STATE.collections.length || "100+"} Fragment gift collections in real time`;
+      }
+
+      const dList = document.getElementById("dealsList");
+      if (!STATE.deals.length) {
+        dList.innerHTML = `<div class="deal-card muted">🛰 Scanning Fragment trait orderbooks... Check back in 15 seconds.</div>`;
+      } else {
+        dList.innerHTML = STATE.deals.map(d => {
+          const gCls = d.grade === "A+" ? "grade-Ap" : (d.grade === "A" ? "grade-A" : "grade-B");
+          const mintBadge = d.locked ? "🔒 #████" : `#${esc(d.mint_num)}`;
+          const img = esc(d.item_image_url || d.coll_thumb_url || "");
+          const actionBtn = d.locked
+            ? `<button class="btn btn-emerald" onclick="openPayModal()">🔓 Unblur Mint ID & URL — 69 ⭐</button>`
+            : `<a class="btn btn-primary" href="${esc(d.buy_url)}" target="_blank">⚡ Buy / Inspect on Fragment</a>`;
+          return `
+            <div class="deal-card">
+              <div class="deal-top">
+                <img class="thumb ${d.locked ? "blurred" : ""}" src="${img}" alt="" />
+                <div class="deal-meta">
+                  <div class="deal-title"><span class="grade ${gCls}">${esc(d.grade)}</span> ${esc(d.coll_name)} <span style="color:var(--accent)">${mintBadge}</span></div>
+                  <div class="trait-sub">${esc(d.trait_label)} • ${d.trait_depth} listed</div>
+                </div>
+                <div class="profit-pill">+${d.net_profit_ton} TON<div class="profit-sub">+${d.roi_pct}% ROI</div></div>
+              </div>
+              <div class="orderbook">
+                <div class="ob-cell"><div class="ob-k">Ask #1</div><div class="ob-v">${d.ask_ton} TON</div></div>
+                <div class="ob-cell"><div class="ob-k">Next Floor #2</div><div class="ob-v">${d.ref_floor_ton} TON</div></div>
+                <div class="ob-cell"><div class="ob-k">Wall #3</div><div class="ob-v">${d.wall_3_ton} TON</div></div>
+              </div>
+              <div class="btn-row">${actionBtn}</div>
+            </div>`;
+        }).join("");
+      }
+
+      renderCollections();
+
+      document.getElementById("plansContainer").innerHTML = (STATE.plans || []).map(p => `
+        <div class="plan-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <b>${esc(p.title)}</b>
+            <span style="color:#fbbf24;font-family:var(--mono);font-weight:700;">${p.stars} ⭐ / $${esc(p.usd)}</span>
+          </div>
+          <div class="muted" style="margin:4px 0 8px;">${esc(p.desc)}</div>
+          <div class="btn-row" style="margin-top:0;">
+            <button class="btn btn-emerald" onclick="payStars('${esc(p.code)}')">⭐ Pay ${p.stars} Stars</button>
+            <button class="btn btn-ghost" onclick="payCrypto('${esc(p.code)}')">💎 $${esc(p.usd)} TON/USDT</button>
+          </div>
+        </div>`).join("");
+
+      if (STATE.alert_prefs) {
+        document.getElementById("prefMaxTon").value = STATE.alert_prefs.max_ton;
+        document.getElementById("prefMinRoi").value = STATE.alert_prefs.min_roi;
+      }
+    }
+
+    function renderCollections() {
+      const q = (document.getElementById("collSearch").value || "").trim().toLowerCase();
+      const rows = (STATE.collections || []).filter(c => !q || c.name.toLowerCase().includes(q) || c.slug.includes(q));
+      document.getElementById("collsList").innerHTML = rows.slice(0, 60).map(c => `
+        <div class="coll-row">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <img class="thumb" style="width:36px;height:36px;border-radius:8px;" src="${esc(c.thumb_url)}" />
+            <div><div style="font-weight:600;font-size:13px;">${esc(c.name)}</div><div class="muted">${c.listed_count} items</div></div>
+          </div>
+          <div style="font-family:var(--mono);font-weight:700;color:var(--accent);">${c.floor_ton > 0 ? c.floor_ton + " TON" : "scanning"}</div>
+        </div>`).join("");
+    }
+
+    async function runAppraise() {
+      const q = document.getElementById("giftQuery").value.trim();
+      const box = document.getElementById("appraiseResult");
+      if (!q) return;
+      box.innerHTML = `<div class="muted">🛰 Pulling live Fragment trait orderbook...</div>`;
+      const r = await fetch(API_BASE + "/api/appraise", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, query: q })
+      });
+      const d = await r.json();
+      if (!r.ok) { box.innerHTML = `<div style="color:var(--rose);font-size:13px;">${esc(d.detail || "Error")}</div>`; if (r.status === 402) openPayModal(); return; }
+      box.innerHTML = `
+        <div style="margin-top:10px;border-top:1px solid rgba(148,163,184,0.15);padding-top:10px;">
+          <div style="display:flex;gap:10px;align-items:center;">
+            <img class="thumb" src="${esc(d.image_url)}" />
+            <div><div style="font-weight:700;">${esc(d.title)}</div><div style="color:var(--emerald);font-family:var(--mono);font-weight:700;">Fair Value: ${d.fair_ton} TON (Net ~${d.net_liquidation_ton} TON)</div></div>
+          </div>
+          <div class="orderbook">
+            <div class="ob-cell"><div class="ob-k">Coll Floor</div><div class="ob-v">${d.coll_floor_ton} TON</div></div>
+            <div class="ob-cell"><div class="ob-k">Model (${d.model_rarity}%)</div><div class="ob-v">${d.model_floor_ton} TON</div></div>
+            <div class="ob-cell"><div class="ob-k">Backdrop (${d.backdrop_rarity}%)</div><div class="ob-v">${d.backdrop_floor_ton} TON</div></div>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-primary" href="${esc(d.buy_url)}" target="_blank">Open Fragment</a>
+            <a class="btn btn-ghost" href="https://t.me/share/url?url=https://t.me/pingscout_ai_bot&text=${encodeURIComponent(d.title + ' Fair Valuation: ' + d.fair_ton + ' TON via FragPulse')}" target="_blank">Share Result</a>
+          </div>
+        </div>`;
+    }
+
+    async function runWallet() {
+      const w = document.getElementById("walletQuery").value.trim();
+      const box = document.getElementById("walletResult");
+      if (!w) return;
+      box.innerHTML = `<div class="muted">🛰 Scanning TON NFTs via TonAPI...</div>`;
+      const r = await fetch(API_BASE + "/api/wallet", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, wallet: w })
+      });
+      const d = await r.json();
+      if (!r.ok) { box.innerHTML = `<div style="color:var(--rose);font-size:13px;">${esc(d.detail || "Error")}</div>`; if (r.status === 402) openPayModal(); return; }
+      box.innerHTML = `
+        <div style="margin-top:8px;font-weight:700;color:var(--emerald);font-family:var(--mono);">Gifts: ${d.gift_count} • Portfolio Floor: ${d.total_floor_ton} TON (Net ~${d.net_liquidation_ton})</div>
+        ${(d.items || []).slice(0, 12).map(it => `<div class="muted" style="margin-top:4px;">• <b>${esc(it.coll_name)} #${it.mint_num}</b> — ${it.floor_ton} TON ${it.backdrop ? "(" + esc(it.backdrop) + ")" : ""}</div>`).join("")}`;
+    }
+
+    async function saveAlerts(enabled) {
+      const max_ton = parseFloat(document.getElementById("prefMaxTon").value || "50");
+      const min_roi = parseFloat(document.getElementById("prefMinRoi").value || "20");
+      const r = await fetch(API_BASE + "/api/alerts", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, enabled, max_ton, min_roi })
+      });
+      const d = await r.json();
+      if (!r.ok) { document.getElementById("alertStatus").textContent = d.detail; return; }
+      document.getElementById("alertStatus").textContent = d.is_pro ? "✅ Sniper preferences saved & active!" : "⚠️ Preferences saved! Activate 24h Pass (69 ⭐) to turn on push alerts.";
+      if (!d.is_pro) openPayModal();
+    }
+
+    async function payStars(plan_code) {
+      const msg = document.getElementById("payMsg");
+      msg.textContent = "Creating Telegram Stars invoice...";
+      const r = await fetch(API_BASE + "/api/invoice/stars", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, plan_code })
+      });
+      const d = await r.json();
+      if (!r.ok) { msg.textContent = d.detail || "Open inside @pingscout_ai_bot to pay with Stars."; return; }
+      if (tg && tg.openInvoice) {
+        tg.openInvoice(d.invoice_url, status => {
+          if (status === "paid") { closePayModal(); setTimeout(loadBootstrap, 800); }
+          else { msg.textContent = "Invoice status: " + status; }
+        });
+      } else {
+        window.open(d.invoice_url, "_blank");
+      }
+    }
+
+    async function payCrypto(plan_code) {
+      const msg = document.getElementById("payMsg");
+      msg.textContent = "Creating @CryptoBot invoice...";
+      const r = await fetch(API_BASE + "/api/invoice/crypto", {
+        method: "POST", headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ init_data: INIT_DATA, plan_code })
+      });
+      const d = await r.json();
+      if (!r.ok) { msg.textContent = d.detail || "Error"; return; }
+      if (tg && tg.openTelegramLink) tg.openTelegramLink(d.pay_url);
+      else window.open(d.pay_url, "_blank");
+    }
+
+    loadBootstrap();
+  </script>
+</body>
+</html>
